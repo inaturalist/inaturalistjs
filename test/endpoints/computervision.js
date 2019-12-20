@@ -18,7 +18,7 @@ describe( "Computervision", ( ) => {
   describe( "score_observation", ( ) => {
     it( "gets scores for observations", done => {
       nock( "http://localhost:4000" )
-        .get( "/v1/computervision/score_observation/1?id=1" )
+        .get( "/v1/computervision/score_observation/1" )
         .reply( 200, { results: [{ taxon: { id: 1 } }] } );
       computervision.score_observation( { id: 1 } ).then( r => {
         expect( r.results[0].taxon.id ).to.eq( 1 );

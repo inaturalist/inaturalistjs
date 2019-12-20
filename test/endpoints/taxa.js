@@ -112,7 +112,7 @@ describe( "Taxa", ( ) => {
   describe( "wanted", ( ) => {
     it( "returns taxon objects", done => {
       nock( "http://localhost:4000" )
-        .get( "/v1/taxa/1/wanted?id=1" )
+        .get( "/v1/taxa/1/wanted" )
         .reply( 200, testHelper.taxonResponse );
       taxa.wanted( { id: 1 } ).then( r => {
         expect( r.results[0].constructor.name ).to.eq( "Taxon" );

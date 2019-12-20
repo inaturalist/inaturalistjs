@@ -34,7 +34,7 @@ describe( "Projects", ( ) => {
   describe( "leave", ( ) => {
     it( "deletes to /projects/:id/leave", done => {
       nock( "http://localhost:3000" )
-        .delete( "/projects/1/leave?id=1" )
+        .delete( "/projects/1/leave" )
         .reply( 200, { } );
       projects.leave( { id: 1 } ).then( ( ) => {
         done( );
@@ -56,7 +56,7 @@ describe( "Projects", ( ) => {
   describe( "update", ( ) => {
     it( "deletes to /projects/:id/remove", done => {
       nock( "http://localhost:3000" )
-        .delete( "/projects/1/remove?id=1" )
+        .delete( "/projects/1/remove" )
         .reply( 200, { id: 1 } );
       projects.remove( { id: 1 } ).then( ( ) => {
         done( );
@@ -112,7 +112,7 @@ describe( "Projects", ( ) => {
   describe( "delete", ( ) => {
     it( "deletes to /projects/:id", done => {
       nock( "http://localhost:3000" )
-        .delete( "/projects/1?id=1", { id: 1 } )
+        .delete( "/projects/1", { id: 1 } )
         .reply( 200, { id: 1 } );
       projects.delete( { id: 1 } ).then( ( ) => {
         done( );
@@ -123,10 +123,10 @@ describe( "Projects", ( ) => {
   describe( "posts", ( ) => {
     it( "gets posts", done => {
       nock( "http://localhost:4000" )
-        .get( "/v1/projects/1/posts?id=1" )
+        .get( "/v1/projects/1/posts" )
         .reply( 200, testHelper.mockResponse );
       projects.posts( { id: 1 } ).then( r => {
-        expect( r.test_uri ).to.eq( "/v1/projects/1/posts?id=1" );
+        expect( r.test_uri ).to.eq( "/v1/projects/1/posts" );
         done( );
       } );
     } );
@@ -146,10 +146,10 @@ describe( "Projects", ( ) => {
   describe( "subscriptions", ( ) => {
     it( "gets posts", done => {
       nock( "http://localhost:4000" )
-        .get( "/v1/projects/1/subscriptions?id=1" )
+        .get( "/v1/projects/1/subscriptions" )
         .reply( 200, testHelper.mockResponse );
       projects.subscriptions( { id: 1 } ).then( r => {
-        expect( r.test_uri ).to.eq( "/v1/projects/1/subscriptions?id=1" );
+        expect( r.test_uri ).to.eq( "/v1/projects/1/subscriptions" );
         done( );
       } );
     } );
@@ -158,10 +158,10 @@ describe( "Projects", ( ) => {
   describe( "members", ( ) => {
     it( "gets /projects/:id/members", done => {
       nock( "http://localhost:4000" )
-        .get( "/v1/projects/1/members?id=1" )
+        .get( "/v1/projects/1/members" )
         .reply( 200, testHelper.mockResponse );
       projects.members( { id: 1 } ).then( r => {
-        expect( r.test_uri ).to.eq( "/v1/projects/1/members?id=1" );
+        expect( r.test_uri ).to.eq( "/v1/projects/1/members" );
         done( );
       } );
     } );
