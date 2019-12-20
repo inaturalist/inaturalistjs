@@ -2995,8 +2995,8 @@ function () {
       return iNaturalistAPI.delete("messages/:id", params, options);
     }
   }, {
-    key: "count",
-    value: function count(params, options) {
+    key: "unread",
+    value: function unread(params, options) {
       var opts = Object.assign({}, options, {
         useWriteApi: true,
         useAuth: true
