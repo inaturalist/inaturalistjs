@@ -4,7 +4,7 @@
 
 JavaScript package for iNaturalist.org. Supports CRUD for iNat data. This
 is an isomorphic library that can be used in the browser and within
-node.js code. Each method returns a JavaScript Promise
+node.js code. Each method returns a JavaScript Promise.
 
 #### Simple Example
 ```js
@@ -15,7 +15,7 @@ inatjs.observations.search({ taxon_id: 4 }).then( rsp => { });
 #### Creating Records
 
 Create and update methods accept a JSON object with the new instance properties
-nested under the instance class name
+nested under the instance class name.
 
 ```js
 var params = {
@@ -31,7 +31,7 @@ inatjs.comments.create( params ).then( c => { } );
 
 #### Updating Records
 
-Updates also need the ID of the record being updated
+Updates also need the ID of the record being updated.
 
 ```js
 var params = {
@@ -43,7 +43,7 @@ inatjs.comments.update( params ).then( c => { } );
 
 #### Deleting Records
 
-Deletes only need the ID
+Deletes only need the ID.
 
 ```js
 inatjs.comments.delete({ id: 1 }).then( () => { } );
@@ -115,7 +115,7 @@ inatjs.comments.create( params, options ).then( c => { } );
 If you happen to be running the iNaturalist Rails codebase, CSRF tokens can
 be used for authenticating requests made from the browser. If a CSRF token is
 available, all requests will be made to the same origin from which the call
-was made. iNaturalistJS will look for the following meta tags
+was made. iNaturalistJS will look for the following meta tags:
 
 ```html
 <meta name="csrf-param" content="... param ...">
@@ -123,7 +123,7 @@ was made. iNaturalistJS will look for the following meta tags
 ```
 
 Alternatively, the token can be passed as a parameter (use the actual
-name of the paramater and not csrf_param)
+name of the paramater and not csrf_param).
 
 ```js
 var params = {
@@ -152,7 +152,7 @@ API_HOST=a WRITE_API_HOST=b node app.js
 ```
 
 And finally, in any environment there is a setConfig method for setting these
-values
+values:
 
 ```js
 import inatjs from "inaturalistjs";

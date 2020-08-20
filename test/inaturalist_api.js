@@ -78,5 +78,12 @@ describe( "iNaturalistAPI", ( ) => {
         done( );
       } );
     } );
+
+    it.only( "should substitute uuid for id if id is missing", ( ) => {
+      const uuid = "1234-abcd";
+      const r = iNaturalistAPI.interpolateRouteParams( "/foo/:id", { uuid } );
+      expect( r.route ).to.eq( `/foo/${uuid}` );
+      expect( r.err ).to.be.undefined;
+    } );
   } );
 } );
