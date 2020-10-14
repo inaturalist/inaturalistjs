@@ -19,7 +19,8 @@
     "coveralls": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --recursive  --exit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
-    "cross-fetch": "^2.2.3"
+    "cross-fetch": "^2.2.3",
+    "form-data": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -38,7 +39,6 @@
     "eslint-plugin-react": "^7.11.1",
     "extend": "^3.0.2",
     "flow-bin": "^0.78.0",
-    "form-data": "^2.3.3",
     "gulp": "^4.0.2",
     "gulp-mocha": "^7.0.0",
     "hoek": "^5.0.4",
