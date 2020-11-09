@@ -52,7 +52,7 @@ describe( "Users", ( ) => {
   describe( "unblock", ( ) => {
     it( "succeeds", done => {
       nock( "http://localhost:3000" )
-        .delete( "/users/1/unblock" )
+        .delete( "/users/1/block" )
         .reply( 200 );
       users.unblock( { id: 1 } ).then( ( ) => {
         done( );

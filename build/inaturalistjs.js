@@ -4554,7 +4554,7 @@ function () {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var options = Object.assign({}, opts);
       options.useAuth = true;
-      return iNaturalistAPI.delete("users/:id/unblock", params, options);
+      return iNaturalistAPI.delete("users/:id/block", params, options);
     }
   }]);
 
