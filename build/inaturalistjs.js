@@ -4384,7 +4384,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Sites = __webpack_require__(51);
+var Site = __webpack_require__(51);
 
 var sites =
 /*#__PURE__*/
@@ -4396,7 +4396,7 @@ function () {
   _createClass(sites, null, [{
     key: "fetch",
     value: function fetch(params) {
-      return iNaturalistAPI.get("sites", params).then(Sites.typifyResultsResponse);
+      return iNaturalistAPI.get("sites", params).then(Site.typifyResultsResponse);
     }
   }]);
 
@@ -4445,9 +4445,9 @@ function (_Model) {
   }
 
   _createClass(Site, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(Site), "typifyInstanceResponse", this).call(this, response, Site);
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(Site), "typifyResultsResponse", this).call(this, response, Site);
     }
   }]);
 
