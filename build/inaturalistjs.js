@@ -4445,20 +4445,9 @@ function (_Model) {
   }
 
   _createClass(Site, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(Site), "typifyInstanceResponse", this).call(this, response, Site);
-    }
-  }, {
     key: "typifyResultsResponse",
     value: function typifyResultsResponse(response) {
-      if (response.results) {
-        response.results = response.results.map(function (r) {
-          return Site.typifyInstanceResponse(r);
-        });
-      }
-
-      return response;
+      return _get(_getPrototypeOf(Site), "typifyResultsResponse", this).call(this, response, Site);
     }
   }]);
 
