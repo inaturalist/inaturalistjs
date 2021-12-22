@@ -1,6 +1,6 @@
 {
   "name": "inaturalistjs",
-  "version": "1.13.3",
+  "version": "2.0.0",
   "description": "inaturalistjs",
   "author": "iNaturalist",
   "license": "MIT",
@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "cross-fetch": "^2.2.3",
-    "form-data": "^3.0.0"
+    "form-data": "^3.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

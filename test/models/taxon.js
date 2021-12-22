@@ -9,17 +9,24 @@ describe( "Taxon", ( ) => {
       expect( t.defaultPhoto.id ).to.eq( 22 );
       expect( t.defaultPhoto.url ).to.eq( "testurl" );
     } );
+    it( "converts nested object attributes to camelcase", ( ) => {
+      const t = new Taxon( {
+        id: 11,
+        default_photo: { id: 22, url: "testurl", license_code: "cc-by-nc" }
+      } );
+      expect( t.defaultPhoto.license_code ).to.eq( t.default_photo.license_code );
+    } );
   } );
 
-  describe( "iconicTaxonName", ( ) => {
+  describe( "getIconicTaxonName", ( ) => {
     it( "returns the iconic_taxon_name", ( ) => {
       const t = new Taxon( { iconic_taxon_name: "test" } );
-      expect( t.iconicTaxonName( ) ).to.eq( "test" );
+      expect( t.getIconicTaxonName( ) ).to.eq( "test" );
     } );
 
     it( "returns unknown if there is no iconic taxon name", ( ) => {
       const t = new Taxon( { iconic_taxon_name: "" } );
-      expect( t.iconicTaxonName( ) ).to.eq( "Unknown" );
+      expect( t.getIconicTaxonName( ) ).to.eq( "Unknown" );
     } );
   } );
 
