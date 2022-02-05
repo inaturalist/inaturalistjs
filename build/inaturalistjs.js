@@ -4613,6 +4613,12 @@ module.exports = taxa;
 /* 55 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4638,7 +4644,7 @@ var users = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update(params, options) {
-      return iNaturalistAPI.upload("users/:id", params, Object.assign({}, options, {
+      return iNaturalistAPI.upload("users/:id", params, _objectSpread(_objectSpread({}, options), {}, {
         method: "put"
       })).then(User.typifyInstanceResponse);
     }
@@ -4652,7 +4658,9 @@ var users = /*#__PURE__*/function () {
     key: "me",
     value: function me() {
       var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI.get("users/me", null, options).then(User.typifyResultsResponse);
     }
@@ -4660,7 +4668,9 @@ var users = /*#__PURE__*/function () {
     key: "mute",
     value: function mute(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI.post("users/:id/mute", params, options);
     }
@@ -4668,7 +4678,9 @@ var users = /*#__PURE__*/function () {
     key: "unmute",
     value: function unmute(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI["delete"]("users/:id/mute", params, options);
     }
@@ -4676,7 +4688,9 @@ var users = /*#__PURE__*/function () {
     key: "block",
     value: function block(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI.post("users/:id/block", params, options);
     }
@@ -4684,7 +4698,9 @@ var users = /*#__PURE__*/function () {
     key: "unblock",
     value: function unblock(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI["delete"]("users/:id/block", params, options);
     }
@@ -4692,9 +4708,21 @@ var users = /*#__PURE__*/function () {
     key: "projects",
     value: function projects(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var options = Object.assign({}, opts);
+
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       return iNaturalistAPI.get("users/:id/projects", params, options).then(Project.typifyResultsResponse);
+    }
+  }, {
+    key: "resendConfirmation",
+    value: function resendConfirmation(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var options = _objectSpread({}, opts);
+
+      options.useAuth = true;
+      return iNaturalistAPI.post("users/resend_confirmation", params, options);
     }
   }]);
 
