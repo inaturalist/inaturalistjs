@@ -111,6 +111,7 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       var headers = apiToken ? {
         Authorization: apiToken
       } : {};
+      headers["Content-Type"] = "application/json";
 
       if (params && params.fields && _typeof(params.fields) === "object") {
         headers.Accept = "application/json";
@@ -219,10 +220,19 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       var body;
 
       if (options.upload) {
-        // multipart requests reference all nested parameter names as strings
+        body = new LocalFormData(); // Before params get "flattened" extract the fields and encode them as a
+        // single JSON string, which the server can handle
+
+        var fields = interpolated.remainingParams.fields;
+
+        if (fields) {
+          delete interpolated.remainingParams.fields;
+          body.append("fields", JSON.stringify(fields));
+        } // multipart requests reference all nested parameter names as strings
         // so flatten arrays into "arr[0]" and objects into "obj[prop]"
+
+
         params = iNaturalistAPI.flattenMultipartParams(interpolated.remainingParams);
-        body = new LocalFormData();
         Object.keys(params).forEach(function (k) {
           // FormData params can include options like file upload sizes
           if (params[k] && params[k].type === "custom" && params[k].value) {
@@ -1731,6 +1741,12 @@ module.exports = Comment;
 /* 16 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1750,8 +1766,10 @@ var computervision = /*#__PURE__*/function () {
     key: "score_image",
     value: function score_image(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
       // eslint-disable-line camelcase
-      var options = Object.assign({}, opts);
+      var options = _objectSpread({}, opts);
+
       options.useAuth = true;
       options.apiURL = iNaturalistAPI.apiURL; // force the host to be the Node API
 
@@ -3220,34 +3238,39 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "fave",
     value: function fave(params, options) {
-      return observations.vote(params, options);
+      if (!iNaturalistAPI.apiURL || iNaturalistAPI.apiURL.match(/\/v1/)) {
+        return observations.vote(params, options);
+      }
+
+      return iNaturalistAPI.post("observations/:id/fave", params, options);
     }
   }, {
     key: "unfave",
     value: function unfave(params, options) {
-      return observations.unvote(params, options);
+      // return observations.unvote( params, options );
+      if (!iNaturalistAPI.apiURL || iNaturalistAPI.apiURL.match(/\/v1/)) {
+        return observations.unvote(params, options);
+      }
+
+      return iNaturalistAPI["delete"]("observations/:id/fave", params, options);
     }
   }, {
     key: "vote",
     value: function vote(params, options) {
-      var endpoint = "votes/vote/observation/:id";
-
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
-        endpoint = "observations/:id/vote";
+        throw new Error("API v2 does not support observations.vote. Use fave or setQualityMetric instead.");
       }
 
-      return iNaturalistAPI.post(endpoint, params, options).then(Observation.typifyInstanceResponse);
+      return iNaturalistAPI.post("votes/vote/observation/:id", params, options).then(Observation.typifyInstanceResponse);
     }
   }, {
     key: "unvote",
     value: function unvote(params, options) {
-      var endpoint = "votes/unvote/observation/:id";
-
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
-        endpoint = "observations/:id/vote";
+        throw new Error("API v2 does not support observations.unvote. Use unfave or deleteQualityMetric instead.");
       }
 
-      return iNaturalistAPI["delete"](endpoint, params, options);
+      return iNaturalistAPI["delete"]("votes/unvote/observation/:id", params, options);
     }
   }, {
     key: "subscribe",
@@ -3261,14 +3284,16 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "review",
     value: function review(params, options) {
-      var p = Object.assign({}, params);
+      var p = _objectSpread({}, params);
+
       p.reviewed = "true";
       return iNaturalistAPI.post("observations/:id/review", p, options);
     }
   }, {
     key: "unreview",
     value: function unreview(params, options) {
-      var p = Object.assign({}, params);
+      var p = _objectSpread({}, params);
+
       return iNaturalistAPI["delete"]("observations/:id/review", p, options);
     }
   }, {
@@ -3305,7 +3330,7 @@ var observations = /*#__PURE__*/function () {
       return iNaturalistAPI.get("observations/identifiers", params).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               user: new User(r.user)
             });
           });
@@ -3320,7 +3345,7 @@ var observations = /*#__PURE__*/function () {
       return iNaturalistAPI.get("observations/observers", params).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               user: new User(r.user)
             });
           });
@@ -3338,7 +3363,7 @@ var observations = /*#__PURE__*/function () {
       })).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               taxon: new Taxon(r.taxon)
             });
           });
@@ -3356,7 +3381,7 @@ var observations = /*#__PURE__*/function () {
       })).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               taxon: new Taxon(r.taxon)
             });
           });
@@ -3374,7 +3399,7 @@ var observations = /*#__PURE__*/function () {
       })).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               taxon: new Taxon(r.taxon)
             });
           });
@@ -3389,7 +3414,8 @@ var observations = /*#__PURE__*/function () {
       return iNaturalistAPI.get("observations/popular_field_values", params).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (res) {
-            var r = Object.assign({}, res);
+            var r = _objectSpread({}, res);
+
             r.controlled_attribute = new ControlledTerm(r.controlled_attribute);
             r.controlled_value = new ControlledTerm(r.controlled_value);
             return r;
@@ -3405,7 +3431,7 @@ var observations = /*#__PURE__*/function () {
       return iNaturalistAPI.get("observations/umbrella_project_stats", params).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               project: new Project(r.project)
             });
           });
@@ -3457,12 +3483,13 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "similarSpecies",
     value: function similarSpecies(params, opts) {
-      var options = Object.assign({}, opts || {});
+      var options = _objectSpread({}, opts || {});
+
       options.useAuth = true;
       return iNaturalistAPI.get("observations/similar_species", params, options).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               taxon: new Taxon(r.taxon)
             });
           });

@@ -1,7 +1,7 @@
 const gulp = require( "gulp" );
 const mocha = require( "gulp-mocha" );
 const webpack = require( "webpack-stream" );
-const webpackConfig = require( "./webpack.config.js" );
+const webpackConfig = require( "./webpack.config" );
 
 const webpackTask = ( ) => (
   gulp.src( "./" )
@@ -22,7 +22,6 @@ const mochaTask = ( ) => (
 const watchMochaTask = ( ) => {
   gulp.watch( ["lib/**/*.js", "./test/**/*.js"], mochaTask );
 };
-
 
 gulp.task( "test", gulp.series( webpackTask, mochaTask ) );
 
