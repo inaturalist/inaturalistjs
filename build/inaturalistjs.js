@@ -4583,12 +4583,18 @@ var taxa = /*#__PURE__*/function () {
   _createClass(taxa, null, [{
     key: "fetch",
     value: function fetch(ids, params) {
-      return iNaturalistAPI.fetch("taxa", ids, params).then(Taxon.typifyResultsResponse);
+      var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return iNaturalistAPI.fetch("taxa", ids, params, _objectSpread(_objectSpread({}, opts), {}, {
+        useAuth: true
+      })).then(Taxon.typifyResultsResponse);
     }
   }, {
     key: "search",
     value: function search(params) {
-      return iNaturalistAPI.get("taxa", params, params).then(Taxon.typifyResultsResponse);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("taxa", params, _objectSpread(_objectSpread({}, opts), {}, {
+        useAuth: true
+      })).then(Taxon.typifyResultsResponse);
     }
   }, {
     key: "autocomplete",
@@ -4606,7 +4612,7 @@ var taxa = /*#__PURE__*/function () {
         useAuth: true
       })).then(function (response) {
         response.results = response.results.map(function (r) {
-          return Object.assign({}, r, {
+          return _objectSpread(_objectSpread({}, r), {}, {
             taxon: new Taxon(r.taxon)
           });
         });
