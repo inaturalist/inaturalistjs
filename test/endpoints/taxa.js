@@ -83,6 +83,16 @@ describe( "Taxa", ( ) => {
         done( );
       } );
     } );
+    it( "authenticates requests", ( ) => {
+      const jwt = "key";
+      // Nock will throw an exception if it receives a request without the
+      // headers specified here. FWIW I tried using chai-nock but I never got
+      // it to fail correctly. ~~~kueda 20220901
+      nock( "http://localhost:4000", { reqheaders: { Authorization: jwt } } )
+        .get( "/v1/taxa/1" )
+        .reply( 200, testHelper.mockResponse );
+      return taxa.fetch( 1, {}, { api_token: jwt } );
+    } );
   } );
 
   describe( "autocomplete", ( ) => {

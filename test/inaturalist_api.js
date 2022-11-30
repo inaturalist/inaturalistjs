@@ -106,9 +106,9 @@ describe( "iNaturalistAPI", ( ) => {
     } );
     it( "should include Content-Type for fetch with fields", done => {
       nock( "http://localhost:4000", { reqheaders: { "Content-Type": "application/json" } } )
-        .post( "/v1/observations/1234" )
+        .get( "/v1/observations/1234?fields=(observed_on%3A!t)" )
         .reply( 200, { id: 1 } );
-      iNaturalistAPI.fetch( "observations", [1234], { fields: ["observed_on"] } ).then( ( ) => {
+      iNaturalistAPI.fetch( "observations", [1234], { fields: { observed_on: true } } ).then( ( ) => {
         done( );
       } ).catch( done );
     } );

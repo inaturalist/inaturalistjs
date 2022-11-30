@@ -6,7 +6,7 @@ const config = {
   entry: "./lib/inaturalistjs.js",
   output: {
     filename: "inaturalistjs.js",
-    path: path.resolve( __dirname, "../build" ),
+    path: path.resolve( __dirname, "build" ),
     libraryTarget: "commonjs"
   },
   module: {
