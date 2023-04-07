@@ -31,9 +31,11 @@ describe( "Observation", ( ) => {
       nock( "http://localhost:3000" )
         .delete( "/observations/1" )
         .reply( 200, { id: 1 } );
-      observations.delete( { id: 1 } ).then( ( ) => {
-        done( );
-      } );
+      observations.delete( { id: 1 } )
+        .then( ( ) => {
+          done( );
+        } )
+        .catch( e => done( e ) );
     } );
   } );
 
@@ -404,5 +406,4 @@ describe( "Observation", ( ) => {
       } );
     } );
   } );
-
 } );

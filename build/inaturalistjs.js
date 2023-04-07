@@ -15,6 +15,7 @@ module.exports = {
   controlled_terms: __webpack_require__(22),
   flags: __webpack_require__(24),
   identifications: __webpack_require__(26),
+  log: __webpack_require__(59),
   messages: __webpack_require__(29),
   observation_field_values: __webpack_require__(31),
   observation_photos: __webpack_require__(33),
@@ -5501,6 +5502,61 @@ var FileUpload = /*#__PURE__*/_createClass(function FileUpload(attrs) {
 });
 
 module.exports = FileUpload;
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var iNaturalistAPI = __webpack_require__(1);
+
+var log = function log(params, userJWT, applicationJWT) {
+  var opts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  var options = _objectSpread({}, opts);
+
+  if (!iNaturalistAPI.apiURL || !iNaturalistAPI.apiURL.match(/\/v2/)) {
+    throw new Error("log endpoint is only availble as of API v2");
+  }
+
+  if (!userJWT) {
+    throw new Error("userJWT is required");
+  }
+
+  if (!applicationJWT) {
+    throw new Error("applicationJWT is required");
+  }
+
+  options.api_token = "".concat(userJWT, ",").concat(applicationJWT);
+  options.apiURL = iNaturalistAPI.apiURL; // force the host to be the Node API
+
+  var newParams = params; // Set params if an Error object was passed in
+
+  if (params instanceof Error) {
+    var pieces = params.message.split(/^\s+at /m);
+    newParams = {
+      level: options.level || "error",
+      message: options.message || pieces[0].trim(),
+      error_type: params.constructor.name,
+      context: options.context
+    };
+
+    if (pieces.length > 1) {
+      newParams.backtrace = pieces.slice(1).map(function (piece) {
+        return piece.trim();
+      }).join("\n");
+    }
+  }
+
+  return iNaturalistAPI.post("log", newParams, options);
+};
+
+module.exports = log;
 
 /***/ })
 /******/ 	]);
