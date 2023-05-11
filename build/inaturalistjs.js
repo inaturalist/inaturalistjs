@@ -15,43 +15,43 @@ module.exports = {
   controlled_terms: __webpack_require__(22),
   flags: __webpack_require__(24),
   identifications: __webpack_require__(26),
-  messages: __webpack_require__(29),
-  observation_field_values: __webpack_require__(31),
-  observation_photos: __webpack_require__(33),
-  observation_sounds: __webpack_require__(34),
-  observations: __webpack_require__(35),
-  photos: __webpack_require__(37),
-  places: __webpack_require__(38),
-  posts: __webpack_require__(40),
-  projects: __webpack_require__(42),
-  project_observations: __webpack_require__(43),
-  project_users: __webpack_require__(45),
-  provider_authorizations: __webpack_require__(47),
-  relationships: __webpack_require__(49),
-  search: __webpack_require__(51),
-  sites: __webpack_require__(52),
-  sounds: __webpack_require__(54),
-  taxa: __webpack_require__(55),
-  translations: __webpack_require__(56),
-  users: __webpack_require__(57),
+  messages: __webpack_require__(30),
+  observation_field_values: __webpack_require__(32),
+  observation_photos: __webpack_require__(34),
+  observation_sounds: __webpack_require__(35),
+  observations: __webpack_require__(36),
+  photos: __webpack_require__(38),
+  places: __webpack_require__(39),
+  posts: __webpack_require__(41),
+  projects: __webpack_require__(43),
+  project_observations: __webpack_require__(44),
+  project_users: __webpack_require__(46),
+  provider_authorizations: __webpack_require__(48),
+  relationships: __webpack_require__(50),
+  search: __webpack_require__(52),
+  sites: __webpack_require__(53),
+  sounds: __webpack_require__(55),
+  taxa: __webpack_require__(56),
+  translations: __webpack_require__(57),
+  users: __webpack_require__(58),
   Annotation: __webpack_require__(12),
   Comment: __webpack_require__(16),
   ControlledTerm: __webpack_require__(23),
   Flag: __webpack_require__(25),
   Identification: __webpack_require__(27),
   Observation: __webpack_require__(28),
-  ObservationFieldValue: __webpack_require__(32),
+  ObservationFieldValue: __webpack_require__(33),
   Photo: __webpack_require__(19),
-  Place: __webpack_require__(39),
-  Post: __webpack_require__(41),
-  Project: __webpack_require__(36),
-  ProjectUser: __webpack_require__(46),
-  ProviderAuthorization: __webpack_require__(48),
-  Site: __webpack_require__(53),
-  Sound: __webpack_require__(59),
+  Place: __webpack_require__(40),
+  Post: __webpack_require__(42),
+  Project: __webpack_require__(37),
+  ProjectUser: __webpack_require__(47),
+  ProviderAuthorization: __webpack_require__(49),
+  Site: __webpack_require__(54),
+  Sound: __webpack_require__(29),
   Taxon: __webpack_require__(18),
   User: __webpack_require__(20),
-  FileUpload: __webpack_require__(58)
+  FileUpload: __webpack_require__(59)
 };
 
 /***/ }),
@@ -3411,7 +3411,7 @@ var Taxon = __webpack_require__(18);
 
 var Photo = __webpack_require__(19);
 
-var Sound = __webpack_require__(59);
+var Sound = __webpack_require__(29);
 
 var Identification = __webpack_require__(27);
 
@@ -3536,6 +3536,61 @@ module.exports = Observation;
 /* 29 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var Model = __webpack_require__(10);
+
+var Sound = /*#__PURE__*/function (_Model) {
+  _inherits(Sound, _Model);
+
+  var _super = _createSuper(Sound);
+
+  function Sound() {
+    _classCallCheck(this, Sound);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(Sound, null, [{
+    key: "typifyInstanceResponse",
+    value: function typifyInstanceResponse(response) {
+      return _get(_getPrototypeOf(Sound), "typifyInstanceResponse", this).call(this, response, Sound);
+    }
+  }]);
+
+  return Sound;
+}(Model);
+
+module.exports = Sound;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3544,7 +3599,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Message = __webpack_require__(30);
+var Message = __webpack_require__(31);
 
 var messages = /*#__PURE__*/function () {
   function messages() {
@@ -3596,7 +3651,7 @@ var messages = /*#__PURE__*/function () {
 module.exports = messages;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -3656,7 +3711,7 @@ var Message = /*#__PURE__*/function (_Model) {
 module.exports = Message;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3667,7 +3722,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var ObservationFieldValue = __webpack_require__(32);
+var ObservationFieldValue = __webpack_require__(33);
 
 var observationFieldValues = /*#__PURE__*/function () {
   function observationFieldValues() {
@@ -3697,7 +3752,7 @@ var observationFieldValues = /*#__PURE__*/function () {
 module.exports = observationFieldValues;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -3752,7 +3807,7 @@ var ObservationFieldValue = /*#__PURE__*/function (_Model) {
 module.exports = ObservationFieldValue;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3806,7 +3861,7 @@ var observationPhotos = /*#__PURE__*/function () {
 module.exports = observationPhotos;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3860,7 +3915,7 @@ var observationSounds = /*#__PURE__*/function () {
 module.exports = observationSounds;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -3881,7 +3936,7 @@ var ControlledTerm = __webpack_require__(23);
 
 var Observation = __webpack_require__(28);
 
-var Project = __webpack_require__(36);
+var Project = __webpack_require__(37);
 
 var Taxon = __webpack_require__(18);
 
@@ -3986,20 +4041,26 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "fetch",
     value: function fetch(ids, params) {
-      return iNaturalistAPI.fetch("observations", ids, params).then(Observation.typifyResultsResponse);
+      var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return iNaturalistAPI.fetch("observations", ids, params, _objectSpread({
+        useAuth: true
+      }, opts)).then(Observation.typifyResultsResponse);
     }
   }, {
     key: "search",
     value: function search(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return iNaturalistAPI.get("observations", params, _objectSpread(_objectSpread({}, opts), {}, {
+      return iNaturalistAPI.get("observations", params, _objectSpread({
         useAuth: true
-      })).then(Observation.typifyResultsResponse);
+      }, opts)).then(Observation.typifyResultsResponse);
     }
   }, {
     key: "identifiers",
     value: function identifiers(params) {
-      return iNaturalistAPI.get("observations/identifiers", params).then(function (response) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/identifiers", params, _objectSpread({
+        useAuth: true
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4014,7 +4075,10 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "observers",
     value: function observers(params) {
-      return iNaturalistAPI.get("observations/observers", params).then(function (response) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/observers", params, _objectSpread({
+        useAuth: true
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4030,9 +4094,9 @@ var observations = /*#__PURE__*/function () {
     key: "speciesCounts",
     value: function speciesCounts(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return iNaturalistAPI.get("observations/species_counts", params, _objectSpread(_objectSpread({}, opts), {}, {
+      return iNaturalistAPI.get("observations/species_counts", params, _objectSpread({
         useAuth: true
-      })).then(function (response) {
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4048,9 +4112,9 @@ var observations = /*#__PURE__*/function () {
     key: "iconicTaxaCounts",
     value: function iconicTaxaCounts(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return iNaturalistAPI.get("observations/iconic_taxa_counts", params, _objectSpread(_objectSpread({}, opts), {}, {
+      return iNaturalistAPI.get("observations/iconic_taxa_counts", params, _objectSpread({
         useAuth: true
-      })).then(function (response) {
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4066,9 +4130,9 @@ var observations = /*#__PURE__*/function () {
     key: "iconicTaxaSpeciesCounts",
     value: function iconicTaxaSpeciesCounts(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return iNaturalistAPI.get("observations/iconic_taxa_species_counts", params, _objectSpread(_objectSpread({}, opts), {}, {
+      return iNaturalistAPI.get("observations/iconic_taxa_species_counts", params, _objectSpread({
         useAuth: true
-      })).then(function (response) {
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4083,7 +4147,10 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "popularFieldValues",
     value: function popularFieldValues(params) {
-      return iNaturalistAPI.get("observations/popular_field_values", params).then(function (response) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/popular_field_values", params, _objectSpread({
+        useAuth: true
+      }, opts)).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (res) {
             var r = _objectSpread({}, res);
@@ -4115,12 +4182,14 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "histogram",
     value: function histogram(params) {
-      return iNaturalistAPI.get("observations/histogram", params);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/histogram", params, opts);
     }
   }, {
     key: "qualityGrades",
     value: function qualityGrades(params) {
-      return iNaturalistAPI.get("observations/quality_grades", params);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/quality_grades", params, opts);
     }
   }, {
     key: "subscriptions",
@@ -4145,20 +4214,22 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "identificationCategories",
     value: function identificationCategories(params) {
-      return iNaturalistAPI.get("observations/identification_categories", params);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/identification_categories", params, opts);
     }
   }, {
     key: "taxonomy",
     value: function taxonomy(params) {
-      return iNaturalistAPI.get("observations/taxonomy", params).then(Taxon.typifyResultsResponse);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/taxonomy", params, opts).then(Taxon.typifyResultsResponse);
     }
   }, {
     key: "similarSpecies",
-    value: function similarSpecies(params, opts) {
-      var options = _objectSpread({}, opts || {});
-
-      options.useAuth = true;
-      return iNaturalistAPI.get("observations/similar_species", params, options).then(function (response) {
+    value: function similarSpecies(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/similar_species", params, _objectSpread(_objectSpread({}, opts), {}, {
+        useAuth: true
+      })).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
@@ -4173,7 +4244,8 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "taxa",
     value: function taxa(params) {
-      return iNaturalistAPI.get("observations/taxa", params);
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("observations/taxa", params, opts);
     }
   }, {
     key: "deleted",
@@ -4188,7 +4260,7 @@ var observations = /*#__PURE__*/function () {
 module.exports = observations;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4248,7 +4320,7 @@ var Project = /*#__PURE__*/function (_Model) {
 module.exports = Project;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4284,7 +4356,7 @@ var photos = /*#__PURE__*/function () {
 module.exports = photos;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4295,7 +4367,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Place = __webpack_require__(39);
+var Place = __webpack_require__(40);
 
 var places = /*#__PURE__*/function () {
   function places() {
@@ -4338,7 +4410,7 @@ var places = /*#__PURE__*/function () {
 module.exports = places;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4393,7 +4465,7 @@ var Place = /*#__PURE__*/function (_Model) {
 module.exports = Place;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -4410,7 +4482,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Post = __webpack_require__(41);
+var Post = __webpack_require__(42);
 
 var posts = /*#__PURE__*/function () {
   function posts() {
@@ -4453,7 +4525,7 @@ var posts = /*#__PURE__*/function () {
 module.exports = posts;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4513,7 +4585,7 @@ var Post = /*#__PURE__*/function (_Model) {
 module.exports = Post;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4524,7 +4596,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Project = __webpack_require__(36);
+var Project = __webpack_require__(37);
 
 var projects = /*#__PURE__*/function () {
   function projects() {
@@ -4643,7 +4715,7 @@ var projects = /*#__PURE__*/function () {
 module.exports = projects;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4654,7 +4726,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var ProjectObservation = __webpack_require__(44);
+var ProjectObservation = __webpack_require__(45);
 
 var projectObservations = /*#__PURE__*/function () {
   function projectObservations() {
@@ -4684,7 +4756,7 @@ var projectObservations = /*#__PURE__*/function () {
 module.exports = projectObservations;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4739,7 +4811,7 @@ var ProjectObservation = /*#__PURE__*/function (_Model) {
 module.exports = ProjectObservation;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4750,7 +4822,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var ProjectUser = __webpack_require__(46);
+var ProjectUser = __webpack_require__(47);
 
 var projectUsers = /*#__PURE__*/function () {
   function projectUsers() {
@@ -4770,7 +4842,7 @@ var projectUsers = /*#__PURE__*/function () {
 module.exports = projectUsers;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4825,7 +4897,7 @@ var ProjectUser = /*#__PURE__*/function (_Model) {
 module.exports = ProjectUser;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -4842,7 +4914,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var ProviderAuthorization = __webpack_require__(48);
+var ProviderAuthorization = __webpack_require__(49);
 
 var ProviderAuthorizations = /*#__PURE__*/function () {
   function ProviderAuthorizations() {
@@ -4876,7 +4948,7 @@ var ProviderAuthorizations = /*#__PURE__*/function () {
 module.exports = ProviderAuthorizations;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -4931,7 +5003,7 @@ var ProviderAuthorization = /*#__PURE__*/function (_Model) {
 module.exports = ProviderAuthorization;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -4948,7 +5020,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Relationship = __webpack_require__(50);
+var Relationship = __webpack_require__(51);
 
 var relationships = /*#__PURE__*/function () {
   function relationships() {
@@ -4994,7 +5066,7 @@ var relationships = /*#__PURE__*/function () {
 module.exports = relationships;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -5066,7 +5138,7 @@ var Relationship = /*#__PURE__*/function (_Model) {
 module.exports = Relationship;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5077,9 +5149,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Place = __webpack_require__(39);
+var Place = __webpack_require__(40);
 
-var Project = __webpack_require__(36);
+var Project = __webpack_require__(37);
 
 var Taxon = __webpack_require__(18);
 
@@ -5127,7 +5199,7 @@ var search = /*#__PURE__*/function () {
 module.exports = search.index;
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5138,7 +5210,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Site = __webpack_require__(53);
+var Site = __webpack_require__(54);
 
 var sites = /*#__PURE__*/function () {
   function sites() {
@@ -5167,7 +5239,7 @@ var sites = /*#__PURE__*/function () {
 module.exports = sites;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -5222,7 +5294,7 @@ var Site = /*#__PURE__*/function (_Model) {
 module.exports = Site;
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5251,7 +5323,7 @@ var sounds = /*#__PURE__*/function () {
 module.exports = sounds;
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -5341,7 +5413,7 @@ var taxa = /*#__PURE__*/function () {
 module.exports = taxa;
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5372,7 +5444,7 @@ var translations = /*#__PURE__*/function () {
 module.exports = translations;
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -5389,7 +5461,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var iNaturalistAPI = __webpack_require__(1);
 
-var Project = __webpack_require__(36);
+var Project = __webpack_require__(37);
 
 var User = __webpack_require__(20);
 
@@ -5502,7 +5574,7 @@ var users = /*#__PURE__*/function () {
 module.exports = users;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module) {
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -5518,61 +5590,6 @@ var FileUpload = /*#__PURE__*/_createClass(function FileUpload(attrs) {
 });
 
 module.exports = FileUpload;
-
-/***/ }),
-/* 59 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var Model = __webpack_require__(10);
-
-var Sound = /*#__PURE__*/function (_Model) {
-  _inherits(Sound, _Model);
-
-  var _super = _createSuper(Sound);
-
-  function Sound() {
-    _classCallCheck(this, Sound);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(Sound, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(Sound), "typifyInstanceResponse", this).call(this, response, Sound);
-    }
-  }]);
-
-  return Sound;
-}(Model);
-
-module.exports = Sound;
 
 /***/ })
 /******/ 	]);
