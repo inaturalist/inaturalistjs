@@ -94,7 +94,7 @@ describe( "iNaturalistAPI", ( ) => {
         .reply( 200, { id: 1 } );
       iNaturalistAPI.post( "observations", { taxon_id: 4 } ).then( ( ) => {
         done( );
-      } ).catch( done );
+      } );
     } );
     it( "should include Content-Type for fetch", done => {
       nock( "http://localhost:4000", { reqheaders: { "Content-Type": "application/json" } } )
@@ -102,7 +102,7 @@ describe( "iNaturalistAPI", ( ) => {
         .reply( 200, { id: 1 } );
       iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
         done( );
-      } ).catch( done );
+      } );
     } );
     it( "should include Content-Type for fetch with fields", done => {
       nock( "http://localhost:4000", { reqheaders: { "Content-Type": "application/json" } } )
@@ -110,7 +110,7 @@ describe( "iNaturalistAPI", ( ) => {
         .reply( 200, { id: 1 } );
       iNaturalistAPI.fetch( "observations", [1234], { fields: { observed_on: true } } ).then( ( ) => {
         done( );
-      } ).catch( done );
+      } );
     } );
     it( "should pass through arbitrary headers for GET requests", done => {
       nock( "http://localhost:4000", { reqheaders: { "Accept-Language": "es" } } )
@@ -130,5 +130,45 @@ describe( "iNaturalistAPI", ( ) => {
     } );
     // Not entirely sure how to test this, maybe with a Sinon mock? ~~~kueda 20230905
     it( "should not allow arbitrary headers to override Content-Type" );
+
+    describe( "userAgent", ( ) => {
+      it( "uses the node-fetch agent by default", done => {
+        nock( "http://localhost:4000" )
+          .matchHeader( "User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" )
+          .get( "/v1/observations/1234" )
+          .reply( 200, { id: 1 } );
+        iNaturalistAPI.fetch( "observations", [1234] ).then( rsp => {
+          done( );
+        } );
+      } );
+
+      describe( "customizing", ( ) => {
+        const TEST_USER_AGENT = "test user agent";
+
+        beforeEach( ( ) => {
+          iNaturalistAPI.setConfig( {
+            apiURL: "http://localhost:4000/v1",
+            writeApiURL: "http://localhost:3000",
+            userAgent: TEST_USER_AGENT
+          } );
+        } );
+        afterEach( ( ) => {
+          iNaturalistAPI.setConfig( {
+            apiURL: "http://localhost:4000/v1",
+            writeApiURL: "http://localhost:3000",
+            userAgent: null
+          } );
+        } );
+        it( "can set user agent with setConfig", done => {
+          nock( "http://localhost:4000" )
+            .matchHeader( "User-Agent", TEST_USER_AGENT )
+            .get( "/v1/observations/1234" )
+            .reply( 200, { id: 1 } );
+          iNaturalistAPI.fetch( "observations", [1234] ).then( rsp => {
+            done( );
+          } );
+        } );
+      } );
+    } );
   } );
 } );

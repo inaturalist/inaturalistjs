@@ -173,4 +173,15 @@ describe( "Users", ( ) => {
       } );
     } );
   } );
+
+  describe( "notification_counts", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/users/notification_counts" )
+        .reply( 200 );
+      users.notification_counts( { } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
 } );
