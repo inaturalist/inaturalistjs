@@ -19,4 +19,67 @@ describe( "Places", ( ) => {
       } );
     } );
   } );
+
+  describe( "autocomplete", ( ) => {
+    describe( "v1", ( ) => {
+      it( "succeeds", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v1/places/autocomplete" )
+          .reply( 200 );
+        places.autocomplete( { } ).then( ( ) => {
+          done( );
+        } );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "raises an error", done => {
+        expect( ( ) => {
+          places.autocomplete( { } );
+        } ).to.throw(
+          "API v2 does not support places.autocomplete. Use places.search instead."
+        );
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "search", ( ) => {
+    describe( "v1", ( ) => {
+      it( "raises an error", done => {
+        expect( ( ) => {
+          places.search( { } );
+        } ).to.throw(
+          "API v1 does not support places.search. Use places.autocomplete instead."
+        );
+        done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "succeeds", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/places" )
+          .reply( 200 );
+        places.search( { } ).then( ( ) => {
+          done( );
+        } );
+      } );
+    } );
+  } );
+
+  describe( "containing", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/places/containing" )
+        .reply( 200 );
+      places.containing( { } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
 } );

@@ -1,23 +1,8 @@
 const { expect } = require( "chai" );
 const _ = require( "lodash" );
 const nock = require( "nock" );
-const iNaturalistAPI = require( "../../lib/inaturalist_api" );
 const users = require( "../../lib/endpoints/users" );
 const testHelper = require( "../../lib/test_helper" );
-
-const v1ToV2 = ( ) => {
-  iNaturalistAPI.setConfig( {
-    apiURL: iNaturalistAPI.apiURL.replace( "/v1", "/v2" ),
-    writeApiURL: iNaturalistAPI.apiURL.replace( "/v1", "/v2" )
-  } );
-};
-
-const v2ToV1 = ( ) => {
-  iNaturalistAPI.setConfig( {
-    apiURL: iNaturalistAPI.apiURL.replace( "/v2", "/v1" ),
-    writeApiURL: iNaturalistAPI.apiURL.replace( "/v2", "/v1" )
-  } );
-};
 
 const veryLongFieldsObject = _.fromPairs( _.map( _.range( 1, 500 ), i => (
   [`field${i}`, true]
@@ -40,8 +25,8 @@ describe( "Users", ( ) => {
     } );
 
     describe( "v2", ( ) => {
-      beforeEach( v1ToV2 );
-      afterEach( v2ToV1 );
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
 
       it( "accepts fields string", done => {
         nock( "http://localhost:4000" )
@@ -80,8 +65,8 @@ describe( "Users", ( ) => {
 
   describe( "me", ( ) => {
     describe( "v2", ( ) => {
-      beforeEach( v1ToV2 );
-      afterEach( v2ToV1 );
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
 
       it( "accepts fields string", done => {
         nock( "http://localhost:4000" )
@@ -180,6 +165,50 @@ describe( "Users", ( ) => {
         .get( "/v1/users/notification_counts" )
         .reply( 200 );
       users.notification_counts( { } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "recent_observation_fields", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/users/recent_observation_fields" )
+        .reply( 200 );
+      users.recent_observation_fields( { } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "update", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .put( "/users/1" )
+        .reply( 200 );
+      users.update( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "update_session", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .put( "/users/update_session" )
+        .reply( 200 );
+      users.update_session( { } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "resendConfirmation", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .post( "/users/resend_confirmation" )
+        .reply( 200 );
+      users.resendConfirmation( { } ).then( ( ) => {
         done( );
       } );
     } );

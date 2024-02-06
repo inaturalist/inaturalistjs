@@ -105,4 +105,31 @@ describe( "Photo", ( ) => {
       expect( p.dimensions( "medium" ) ).not.to.exist;
     } );
   } );
+
+  describe( "flaggedAsCopyrighted", ( ) => {
+    it( "returns false if there are no flags", ( ) => {
+      const p = new Photo( { flags: [] } );
+      expect( p.flaggedAsCopyrighted( ) ).to.be.false;
+    } );
+
+    it( "returns true if there is an unresolved copyright infringement flag", ( ) => {
+      const p = new Photo( {
+        flags: [{
+          resolved: false,
+          flag: "copyright infringement"
+        }]
+      } );
+      expect( p.flaggedAsCopyrighted( ) ).to.be.true;
+    } );
+
+    it( "returns false if all copyright infringement flags are resolved", ( ) => {
+      const p = new Photo( {
+        flags: [{
+          resolved: true,
+          flag: "copyright infringement"
+        }]
+      } );
+      expect( p.flaggedAsCopyrighted( ) ).to.be.false;
+    } );
+  } );
 } );

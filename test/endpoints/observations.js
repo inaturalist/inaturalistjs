@@ -37,6 +37,36 @@ describe( "Observation", ( ) => {
     } );
   } );
 
+  describe( "vote", ( ) => {
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "raises an error", done => {
+        expect( ( ) => {
+          observations.vote( { id: 1 } );
+        } ).to.throw(
+          "API v2 does not support observations.vote. Use fave or setQualityMetric instead."
+        );
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "unvote", ( ) => {
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "raises an error", done => {
+        expect( ( ) => {
+          observations.unvote( { id: 1 } );
+        } ).to.throw(
+          "API v2 does not support observations.unvote. Use unfave or deleteQualityMetric instead."
+        );
+        done( );
+      } );
+    } );
+  } );
+
   describe( "fave", ( ) => {
     it( "posts to /votes/vote/observation/:id", done => {
       nock( "http://localhost:3000" )
@@ -44,6 +74,19 @@ describe( "Observation", ( ) => {
         .reply( 200, { id: 1 } );
       observations.fave( { id: 1 } ).then( ( ) => {
         done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "posts to /observation/:id/fave", done => {
+        nock( "http://localhost:4000" )
+          .post( "/v2/observations/1/fave" )
+          .reply( 200, { id: 1 } );
+        observations.fave( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
       } );
     } );
   } );
@@ -55,6 +98,19 @@ describe( "Observation", ( ) => {
         .reply( 200, { id: 1 } );
       observations.unfave( { id: 1 } ).then( ( ) => {
         done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "deletes to /observation/:id/fave", done => {
+        nock( "http://localhost:4000" )
+          .delete( "/v2/observations/1/fave" )
+          .reply( 200, { id: 1 } );
+        observations.unfave( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
       } );
     } );
   } );
@@ -405,4 +461,104 @@ describe( "Observation", ( ) => {
     } );
   } );
 
+  describe( "qualityMetrics", ( ) => {
+    it( "gets /observations/:id/quality_metrics", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/1/quality_metrics" )
+        .reply( 200, { id: 1 } );
+      observations.qualityMetrics( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "popularFieldValues", ( ) => {
+    it( "gets /observations/popular_field_values", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/popular_field_values" )
+        .reply( 200, {
+          results: [{
+            controlled_attribute: {
+              label: "Life Stage"
+            },
+            controlled_value: {
+              label: "Life Stage"
+            }
+          }]
+        } );
+      observations.popularFieldValues( ).then( r => {
+        expect( r.results[0].controlled_attribute.constructor.name ).to.eq( "ControlledTerm" );
+        expect( r.results[0].controlled_value.constructor.name ).to.eq( "ControlledTerm" );
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "subscribe", ( ) => {
+    it( "posts to /subscriptions/Observation/:id/subscribe", done => {
+      nock( "http://localhost:3000" )
+        .post( "/subscriptions/Observation/1/subscribe" )
+        .reply( 200, { id: 1 } );
+      observations.subscribe( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "puts to /observations/:id/subscription", done => {
+        nock( "http://localhost:4000" )
+          .put( "/v2/observations/1/subscription" )
+          .reply( 200, { id: 1 } );
+        observations.subscribe( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
+      } );
+    } );
+  } );
+
+  describe( "taxonomy", ( ) => {
+    it( "gets /observations/taxonomy", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/taxonomy" )
+        .reply( 200 );
+      observations.taxonomy( ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "similarSpecies", ( ) => {
+    it( "gets /observations/similar_species", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/similar_species" )
+        .reply( 200, testHelper.taxonResponse( ) );
+      observations.similarSpecies( ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "taxa", ( ) => {
+    it( "gets /observations/taxa", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/taxa" )
+        .reply( 200 );
+      observations.taxa( ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "deleted", ( ) => {
+    it( "gets /observations/deleted", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/observations/deleted" )
+        .reply( 200 );
+      observations.deleted( ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
 } );

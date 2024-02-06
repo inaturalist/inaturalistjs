@@ -8,7 +8,7 @@ describe( "Taxa", ( ) => {
     it( "fetches taxa by ID", done => {
       nock( "http://localhost:4000" )
         .get( "/v1/taxa/1" )
-        .reply( 200, testHelper.mockResponse );
+        .reply( 200, testHelper.taxonResponse );
       taxa.fetch( 1 ).then( r => {
         expect( r.test_uri ).to.eq( "/v1/taxa/1" );
         expect( r.constructor.name ).to.eq( "iNaturalistAPIResponse" );

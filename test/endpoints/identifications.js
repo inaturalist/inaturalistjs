@@ -1,3 +1,4 @@
+const _ = require( "lodash" );
 const { expect } = require( "chai" );
 const nock = require( "nock" );
 const identifications = require( "../../lib/endpoints/identifications" );
@@ -97,6 +98,81 @@ describe( "Identifications", ( ) => {
         } );
       identifications.identifiers( ).then( r => {
         expect( r.results[0].user.constructor.name ).to.eq( "User" );
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "recent_taxa", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/identifications/recent_taxa" )
+        .reply( 200, {
+          total_results: 1,
+          page: 1,
+          per_page: 1,
+          results: [{
+            taxon: {
+              name: "Cathartes aura",
+              id: 4756
+            },
+            identification: {
+              id: 1,
+              observation: {
+                id: 2,
+                identifications: []
+              }
+            }
+          }]
+        } );
+      identifications.recent_taxa( { } ).then( r => {
+        expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
+        expect( r.results[0].identification.constructor.name ).to.eq( "Identification" );
+        expect( r.results[0].identification.observation.constructor.name ).to.eq( "Observation" );
+        expect( _.has( r.results[0].identification.observation, "identifications" ) ).to.be.false;
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "recent_taxa_revisited", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/identifications/recent_taxa_revisited" )
+        .reply( 200, {
+          total_results: 1,
+          page: 1,
+          per_page: 1,
+          results: [{
+            taxon: {
+              name: "Cathartes aura",
+              id: 4756
+            },
+            identification: {
+              id: 1,
+              observation: {
+                id: 2,
+                identifications: []
+              }
+            }
+          }]
+        } );
+      identifications.recent_taxa_revisited( { } ).then( r => {
+        expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
+        expect( r.results[0].identification.constructor.name ).to.eq( "Identification" );
+        expect( r.results[0].identification.observation.constructor.name ).to.eq( "Observation" );
+        expect( _.has( r.results[0].identification.observation, "identifications" ) ).to.be.false;
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "categories", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/identifications/categories" )
+        .reply( 200 );
+      identifications.categories( { } ).then( ( ) => {
         done( );
       } );
     } );

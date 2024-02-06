@@ -22,6 +22,7 @@ describe( "ProviderAuthorizations", ( ) => {
         } );
       providerAuthorizations.search( ).then( r => {
         nockScope.done( );
+        expect( r.results[0].constructor.name ).to.eq( "ProviderAuthorization" );
         expect( r.results[0].provider_uid ).to.eq( stub.provider_uid );
         expect( r.results[0].provider_name ).to.eq( stub.provider_name );
         done( );

@@ -24,6 +24,7 @@ describe( "AuthorizedApplications", ( ) => {
         } );
       authorizedApplications.search( ).then( r => {
         nockScope.done( );
+        expect( r.results[0].constructor.name ).to.eq( "AuthorizedApplication" );
         expect( r.results[0].application.id ).to.eq( stub.application.id );
         expect( r.results[0].application.name ).to.eq( stub.application.name );
         expect( r.results[0].created_at ).to.eq( stub.created_at );

@@ -35,4 +35,37 @@ describe( "Relationships", ( ) => {
         .catch( done );
     } );
   } );
+
+  describe( "create", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .post( "/relationships" )
+        .reply( 200 );
+      relationships.create( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "update", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .put( "/relationships/1" )
+        .reply( 200 );
+      relationships.update( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "delete", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .delete( "/relationships/1" )
+        .reply( 200 );
+      relationships.delete( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
 } );

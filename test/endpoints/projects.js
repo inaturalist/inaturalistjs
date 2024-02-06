@@ -29,6 +29,19 @@ describe( "Projects", ( ) => {
         done( );
       } );
     } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "posts to /projects/:id/membership", done => {
+        nock( "http://localhost:4000" )
+          .post( "/v2/projects/1/membership" )
+          .reply( 200, { } );
+        projects.join( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
+      } );
+    } );
   } );
 
   describe( "leave", ( ) => {
@@ -38,6 +51,19 @@ describe( "Projects", ( ) => {
         .reply( 200, { } );
       projects.leave( { id: 1 } ).then( ( ) => {
         done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "deletes to /projects/:id/membership", done => {
+        nock( "http://localhost:4000" )
+          .delete( "/v2/projects/1/membership" )
+          .reply( 200, { } );
+        projects.leave( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
       } );
     } );
   } );
@@ -196,6 +222,28 @@ describe( "Projects", ( ) => {
         .reply( 200, testHelper.mockResponse );
       projects.search( { lat: 10, lng: 20 } ).then( r => {
         expect( r.test_uri ).to.eq( "/v1/projects?lat=10&lng=20" );
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "followers", ( ) => {
+    it( "gets /v1/projects/:id/followers", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/projects/1/followers" )
+        .reply( 200 );
+      projects.followers( { id: 1 } ).then( ( ) => {
+        done( );
+      } );
+    } );
+  } );
+
+  describe( "search", ( ) => {
+    it( "gets /v1/projects/:id/membership", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/projects/1/membership" )
+        .reply( 200 );
+      projects.membership( { id: 1 } ).then( ( ) => {
         done( );
       } );
     } );

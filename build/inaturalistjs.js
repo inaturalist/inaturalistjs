@@ -1996,9 +1996,9 @@ var AuthorizedApplication = /*#__PURE__*/function (_Model) {
     return _super.apply(this, arguments);
   }
   _createClass(AuthorizedApplication, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(AuthorizedApplication), "typifyInstanceResponse", this).call(this, response, AuthorizedApplication);
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(AuthorizedApplication), "typifyResultsResponse", this).call(this, response, AuthorizedApplication);
     }
   }]);
   return AuthorizedApplication;
@@ -2099,7 +2099,7 @@ var computervision = /*#__PURE__*/function () {
       options.apiURL = iNaturalistAPI.apiURL; // force the host to be the Node API
       return iNaturalistAPI.upload("computervision/score_image", params, options).then(function (response) {
         response.results = response.results.map(function (r) {
-          return Object.assign({}, r, {
+          return _objectSpread(_objectSpread({}, r), {}, {
             taxon: new Taxon(r.taxon)
           });
         });
@@ -2114,11 +2114,11 @@ var computervision = /*#__PURE__*/function () {
     value: function score_observation(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       // eslint-disable-line camelcase
-      var options = Object.assign({}, opts);
+      var options = _objectSpread({}, opts);
       options.useAuth = true;
       return iNaturalistAPI.get("computervision/score_observation/:id", params, options).then(function (response) {
         response.results = response.results.map(function (r) {
-          return Object.assign({}, r, {
+          return _objectSpread(_objectSpread({}, r), {}, {
             taxon: new Taxon(r.taxon)
           });
         });
@@ -2369,8 +2369,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -2438,6 +2436,9 @@ var ConservationStatus = /*#__PURE__*/function (_Model) {
         case "Norma Oficial 059":
           return this.normaStatus();
         default:
+          if (!this.status) {
+            return this.status;
+          }
           switch (this.status.toLowerCase()) {
             case "se":
             case "fe":
@@ -2502,11 +2503,6 @@ var ConservationStatus = /*#__PURE__*/function (_Model) {
           return this.status;
       }
     }
-  }], [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(ConservationStatus), "typifyInstanceResponse", this).call(this, response, ConservationStatus);
-    }
   }]);
   return ConservationStatus;
 }(Model);
@@ -2516,6 +2512,9 @@ module.exports = ConservationStatus;
 /* 24 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -2523,8 +2522,11 @@ var iNaturalistAPI = __webpack_require__(1);
 var ControlledTerm = __webpack_require__(25);
 var typifyResponse = function typifyResponse(response) {
   var typifiedResponse = ControlledTerm.typifyResultsResponse(response);
+  if (!typifiedResponse.results) {
+    return typifiedResponse;
+  }
   for (var i = 0; i < typifiedResponse.results.length; i += 1) {
-    if (typifiedResponse.results[i] && !typifiedResponse.results[i].values) {
+    if (typifiedResponse.results[i] && typifiedResponse.results[i].values) {
       typifiedResponse.results[i].values = typifiedResponse.results[i].values.map(function (v) {
         return new ControlledTerm(v);
       });
@@ -2545,7 +2547,7 @@ var controlledTerms = /*#__PURE__*/function () {
       // eslint-disable-line camelcase
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
         var taxonIds = params.taxon_id.toString().split(",").join(",");
-        var newParams = Object.assign({}, params);
+        var newParams = _objectSpread({}, params);
         delete newParams.taxon_id;
         return iNaturalistAPI.get("controlled_terms/for_taxon/".concat(taxonIds), newParams, opts).then(typifyResponse);
       }
@@ -2681,6 +2683,9 @@ module.exports = Flag;
 /* 28 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -2710,14 +2715,15 @@ var identifications = /*#__PURE__*/function () {
     }
   }, {
     key: "similar_species",
-    value: function similar_species(params, opts) {
+    value: function similar_species(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       // eslint-disable-line camelcase
-      var options = Object.assign({}, opts || {});
+      var options = _objectSpread({}, opts);
       options.useAuth = true;
       return iNaturalistAPI.get("identifications/similar_species", params, options).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               taxon: new Taxon(r.taxon)
             });
           });
@@ -2727,15 +2733,16 @@ var identifications = /*#__PURE__*/function () {
     }
   }, {
     key: "recent_taxa",
-    value: function recent_taxa(params, opts) {
+    value: function recent_taxa(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       // eslint-disable-line camelcase
-      var options = Object.assign({}, opts || {});
+      var options = _objectSpread({}, opts);
       options.useAuth = true;
       return iNaturalistAPI.get("identifications/recent_taxa", params, options).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (res) {
             var _r$identification, _r$identification$obs;
-            var r = Object.assign({}, res);
+            var r = _objectSpread({}, res);
             r.taxon = new Taxon(r.taxon);
             r.identification = new Identification(r.identification);
             if ((_r$identification = r.identification) !== null && _r$identification !== void 0 && (_r$identification$obs = _r$identification.observation) !== null && _r$identification$obs !== void 0 && _r$identification$obs.identifications) {
@@ -2750,15 +2757,16 @@ var identifications = /*#__PURE__*/function () {
     }
   }, {
     key: "recent_taxa_revisited",
-    value: function recent_taxa_revisited(params, opts) {
+    value: function recent_taxa_revisited(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       // eslint-disable-line camelcase
-      var options = Object.assign({}, opts || {});
+      var options = _objectSpread({}, opts);
       options.useAuth = true;
       return iNaturalistAPI.get("identifications/recent_taxa_revisited", params, options).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (res) {
             var _r$identification2, _r$identification2$ob;
-            var r = Object.assign({}, res);
+            var r = _objectSpread({}, res);
             r.taxon = new Taxon(r.taxon);
             r.identification = new Identification(r.identification);
             if ((_r$identification2 = r.identification) !== null && _r$identification2 !== void 0 && (_r$identification2$ob = _r$identification2.observation) !== null && _r$identification2$ob !== void 0 && _r$identification2$ob.identifications) {
@@ -2777,7 +2785,7 @@ var identifications = /*#__PURE__*/function () {
       return iNaturalistAPI.get("identifications/identifiers", params, options).then(function (response) {
         if (response.results) {
           response.results = response.results.map(function (r) {
-            return Object.assign({}, r, {
+            return _objectSpread(_objectSpread({}, r), {}, {
               user: new User(r.user)
             });
           });
@@ -2996,6 +3004,9 @@ module.exports = Sound;
 /* 32 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -3012,8 +3023,9 @@ var messages = /*#__PURE__*/function () {
     }
   }, {
     key: "search",
-    value: function search(params, options) {
-      var opts = Object.assign({}, options, {
+    value: function search(params) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var opts = _objectSpread(_objectSpread({}, options), {}, {
         useWriteApi: true,
         useAuth: true
       });
@@ -3021,8 +3033,9 @@ var messages = /*#__PURE__*/function () {
     }
   }, {
     key: "fetch",
-    value: function fetch(params, options) {
-      var opts = Object.assign({}, options, {
+    value: function fetch(params) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var opts = _objectSpread(_objectSpread({}, options), {}, {
         useWriteApi: true,
         useAuth: true
       });
@@ -3035,8 +3048,9 @@ var messages = /*#__PURE__*/function () {
     }
   }, {
     key: "unread",
-    value: function unread(params, options) {
-      var opts = Object.assign({}, options, {
+    value: function unread(params) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var opts = _objectSpread(_objectSpread({}, options), {}, {
         useWriteApi: true,
         useAuth: true
       });
@@ -3159,6 +3173,9 @@ module.exports = ObservationFieldValue;
 /* 36 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -3181,8 +3198,9 @@ var observationPhotos = /*#__PURE__*/function () {
     }
   }, {
     key: "update",
-    value: function update(params, opts) {
-      var options = Object.assign({}, opts);
+    value: function update(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = _objectSpread({}, opts);
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
         return iNaturalistAPI.put("observation_photos/:id", params, options);
       }
@@ -3203,6 +3221,9 @@ module.exports = observationPhotos;
 /* 37 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -3225,8 +3246,9 @@ var observationSounds = /*#__PURE__*/function () {
     }
   }, {
     key: "update",
-    value: function update(params, opts) {
-      var options = Object.assign({}, opts);
+    value: function update(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = _objectSpread({}, opts);
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
         return iNaturalistAPI.put("observation_sounds/:id", params, options);
       }
@@ -3289,7 +3311,6 @@ var observations = /*#__PURE__*/function () {
   }, {
     key: "unfave",
     value: function unfave(params, options) {
-      // return observations.unvote( params, options );
       if (!iNaturalistAPI.apiURL || !iNaturalistAPI.apiURL.match(/\/v2/)) {
         return observations.unvote(params, options);
       }
@@ -3800,6 +3821,9 @@ module.exports = Post;
 /* 45 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -3832,7 +3856,7 @@ var projects = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update(params, options) {
-      return iNaturalistAPI.upload("projects/:id", params, Object.assign({}, options, {
+      return iNaturalistAPI.upload("projects/:id", params, _objectSpread(_objectSpread({}, options), {}, {
         method: "put"
       })).then(Project.typifyInstanceResponse);
     }
@@ -4104,9 +4128,9 @@ var ProviderAuthorization = /*#__PURE__*/function (_Model) {
     return _super.apply(this, arguments);
   }
   _createClass(ProviderAuthorization, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(ProviderAuthorization), "typifyInstanceResponse", this).call(this, response, ProviderAuthorization);
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(ProviderAuthorization), "typifyResultsResponse", this).call(this, response, ProviderAuthorization);
     }
   }]);
   return ProviderAuthorization;
@@ -4623,6 +4647,14 @@ var users = /*#__PURE__*/function () {
     value: function notification_counts(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       return iNaturalistAPI.get("users/notification_counts", params, _objectSpread(_objectSpread({}, opts), {}, {
+        useAuth: true
+      }));
+    }
+  }, {
+    key: "recent_observation_fields",
+    value: function recent_observation_fields(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return iNaturalistAPI.get("users/recent_observation_fields", params, _objectSpread(_objectSpread({}, opts), {}, {
         useAuth: true
       }));
     }

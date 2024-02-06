@@ -63,8 +63,10 @@ describe( "iNaturalistAPI", ( ) => {
 
   describe( "interpolateRouteParams", ( ) => {
     it( "interpolate params", ( ) => {
-      const r = iNaturalistAPI.interpolateRouteParams( "/one/:one/two/:two/:three",
-        { one: 1, two: 2, three: 3 } );
+      const r = iNaturalistAPI.interpolateRouteParams(
+        "/one/:one/two/:two/:three",
+        { one: 1, two: 2, three: 3 }
+      );
       expect( r.route ).to.eq( "/one/1/two/2/3" );
       expect( r.err ).to.be.undefined;
     } );
@@ -137,7 +139,7 @@ describe( "iNaturalistAPI", ( ) => {
           .matchHeader( "User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" )
           .get( "/v1/observations/1234" )
           .reply( 200, { id: 1 } );
-        iNaturalistAPI.fetch( "observations", [1234] ).then( rsp => {
+        iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
           done( );
         } );
       } );
@@ -164,7 +166,7 @@ describe( "iNaturalistAPI", ( ) => {
             .matchHeader( "User-Agent", TEST_USER_AGENT )
             .get( "/v1/observations/1234" )
             .reply( 200, { id: 1 } );
-          iNaturalistAPI.fetch( "observations", [1234] ).then( rsp => {
+          iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
             done( );
           } );
         } );
