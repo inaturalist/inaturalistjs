@@ -2033,6 +2033,11 @@ var comments = /*#__PURE__*/function () {
     value: function _delete(params, options) {
       return iNaturalistAPI["delete"]("comments/:id", params, options);
     }
+  }, {
+    key: "translate",
+    value: function translate(params, options) {
+      return iNaturalistAPI.post("comments/translation", params, options);
+    }
   }]);
   return comments;
 }();
