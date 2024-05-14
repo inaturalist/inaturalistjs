@@ -146,24 +146,38 @@ describe( "iNaturalistAPI", ( ) => {
 
       describe( "customizing", ( ) => {
         const TEST_USER_AGENT = "test user agent";
+        const TEST_X_WHATEVER = "whatever";
 
         beforeEach( ( ) => {
           iNaturalistAPI.setConfig( {
             apiURL: "http://localhost:4000/v1",
             writeApiURL: "http://localhost:3000",
-            userAgent: TEST_USER_AGENT
+            userAgent: TEST_USER_AGENT,
+            headers: {
+              "X-Whatever": TEST_X_WHATEVER
+            }
           } );
         } );
         afterEach( ( ) => {
           iNaturalistAPI.setConfig( {
             apiURL: "http://localhost:4000/v1",
             writeApiURL: "http://localhost:3000",
-            userAgent: null
+            userAgent: null,
+            headers: null
           } );
         } );
         it( "can set user agent with setConfig", done => {
           nock( "http://localhost:4000" )
             .matchHeader( "User-Agent", TEST_USER_AGENT )
+            .get( "/v1/observations/1234" )
+            .reply( 200, { id: 1 } );
+          iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
+            done( );
+          } );
+        } );
+        it( "can set headers with setConfig", done => {
+          nock( "http://localhost:4000" )
+            .matchHeader( "X-Whatever", TEST_X_WHATEVER )
             .get( "/v1/observations/1234" )
             .reply( 200, { id: 1 } );
           iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
