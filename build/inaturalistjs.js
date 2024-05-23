@@ -154,11 +154,13 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           headers: headers,
           body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
             fields: fieldsObject
-          }))
+          })),
+          signal: options.signal
         });
       } else {
         fetch = localFetch(urlWithQueryParams, {
-          headers: headers
+          headers: headers,
+          signal: options.signal
         });
       }
 
@@ -224,11 +226,13 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           headers: headers,
           body: JSON.stringify(_objectSpread(_objectSpread({}, remainingParams), {}, {
             fields: fieldsObject
-          }))
+          })),
+          signal: options.signal
         });
       } else {
         fetch = localFetch(urlWithQueryParams, {
-          headers: headers
+          headers: headers,
+          signal: options.signal
         });
       }
 
@@ -313,7 +317,8 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       var fetchOpts = {
         method: options.method || "post",
         credentials: options.same_origin ? "same-origin" : undefined,
-        headers: headers
+        headers: headers,
+        signal: options.signal
       };
 
       if (options.method !== "head") {
