@@ -132,11 +132,13 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           headers: headers,
           body: JSON.stringify(_objectSpread(_objectSpread({}, params), {}, {
             fields: fieldsObject
-          }))
+          })),
+          signal: options.signal
         });
       } else {
         fetch = localFetch(urlWithQueryParams, {
-          headers: headers
+          headers: headers,
+          signal: options.signal
         });
       }
       return fetch.then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson).then(iNaturalistAPI.thenWrap);
@@ -191,11 +193,13 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           headers: headers,
           body: JSON.stringify(_objectSpread(_objectSpread({}, remainingParams), {}, {
             fields: fieldsObject
-          }))
+          })),
+          signal: options.signal
         });
       } else {
         fetch = localFetch(urlWithQueryParams, {
-          headers: headers
+          headers: headers,
+          signal: options.signal
         });
       }
       return fetch.then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson).then(iNaturalistAPI.thenWrap);
@@ -265,7 +269,8 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       var fetchOpts = {
         method: options.method || "post",
         credentials: options.same_origin ? "same-origin" : undefined,
-        headers: headers
+        headers: headers,
+        signal: options.signal
       };
       if (options.method !== "head") {
         fetchOpts.body = body;
