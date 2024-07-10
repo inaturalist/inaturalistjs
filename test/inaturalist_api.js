@@ -134,9 +134,9 @@ describe( "iNaturalistAPI", ( ) => {
     it( "should not allow arbitrary headers to override Content-Type" );
 
     describe( "userAgent", ( ) => {
-      it( "uses the node-fetch agent by default", done => {
+      it( "user agent is undefined by default", done => {
         nock( "http://localhost:4000" )
-          .matchHeader( "User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" )
+          .matchHeader( "User-Agent", a => typeof a === "undefined" )
           .get( "/v1/observations/1234" )
           .reply( 200, { id: 1 } );
         iNaturalistAPI.fetch( "observations", [1234] ).then( ( ) => {
