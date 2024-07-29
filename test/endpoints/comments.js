@@ -13,7 +13,7 @@ describe( "Comments", ( ) => {
       } );
     } );
 
-    it( "adds an authorization ready for the api_token", done => {
+    it( "adds an authorization header for the api_token", done => {
       nock( "http://localhost:3000", { reqheaders: { Authorization: "key" } } )
         .post( "/comments", { body: "testbody" } )
         .reply( 200, { id: 1 } );
