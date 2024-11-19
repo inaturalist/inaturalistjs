@@ -25,6 +25,8 @@ jobs:
 
     - run: npm run coverage
 
+    - run: npm run eslint
+
   notify:
     name: Notify Slack
     needs: build

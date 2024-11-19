@@ -89,6 +89,69 @@ describe( "iNaturalistAPI", ( ) => {
     } );
   } );
 
+  describe( "multipartBodyForResuest", ( ) => {
+    it( "returns FormData if there are custom blob fields", ( ) => {
+      const requestParameters = {
+        customField: {
+          type: "custom",
+          value: new Blob( )
+        }
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body.constructor.name ).to.eq( "FormData" );
+    } );
+
+    it( "returns FormData if there are blob fields", ( ) => {
+      const requestParameters = {
+        blobField: new Blob( )
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body.constructor.name ).to.eq( "FormData" );
+    } );
+
+    it( "returns fields as a JSON string", ( ) => {
+      const fields = {
+        field1: true,
+        field2: true
+      };
+      const requestParameters = {
+        fields,
+        stringField: "string",
+        blobField: new Blob( )
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body.constructor.name ).to.eq( "FormData" );
+      expect( body.get( "fields" ) ).to.eq( JSON.stringify( fields ) );
+    } );
+
+    it( "returns null if there are no fields that need multipart requests", ( ) => {
+      const fields = {
+        field1: true,
+        field2: true
+      };
+      const requestParameters = {
+        fields,
+        stringField: "string",
+        someObject: {
+          nestedField: 101
+        }
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body ).to.be.null;
+    } );
+
+    it( "strings fields remain strings", ( ) => {
+      const fields = "all";
+      const requestParameters = {
+        fields,
+        blobField: new Blob( )
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body.constructor.name ).to.eq( "FormData" );
+      expect( body.get( "fields" ) ).to.eq( fields );
+    } );
+  } );
+
   describe( "headers", ( ) => {
     it( "should include Content-Type for post", done => {
       nock( "http://localhost:3000", { reqheaders: { "Content-Type": "application/json" } } )

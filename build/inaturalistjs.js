@@ -242,29 +242,13 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       }
       // get the right host to send requests
       var host = iNaturalistAPI.methodHostPrefix(options);
-      // make the request
+      // prepare the request
       var body;
       if (options.upload) {
-        body = new LocalFormData();
-        // Before params get "flattened" extract the fields and encode them as a
-        // single JSON string, which the server can handle
-        var fields = interpolated.remainingParams.fields;
-        if (fields) {
-          delete interpolated.remainingParams.fields;
-          body.append("fields", JSON.stringify(fields));
-        }
-        // multipart requests reference all nested parameter names as strings
-        // so flatten arrays into "arr[0]" and objects into "obj[prop]"
-        params = iNaturalistAPI.flattenMultipartParams(interpolated.remainingParams);
-        Object.keys(params).forEach(function (k) {
-          // FormData params can include options like file upload sizes
-          if (params[k] && params[k].type === "custom" && params[k].value) {
-            body.append(k, params[k].value, params[k].options);
-          } else {
-            body.append(k, typeof params[k] === "boolean" ? params[k].toString() : params[k]);
-          }
-        });
-      } else {
+        body = iNaturalistAPI.multipartBodyForResuest(interpolated.remainingParams);
+      }
+      // if there is no multipart request body, prepare it as a JSON request body
+      if (body === null || _typeof(body) !== "object") {
         headers["Content-Type"] = "application/json";
         body = JSON.stringify(interpolated.remainingParams);
       }
@@ -285,6 +269,42 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       }
       var url = "".concat(host, "/").concat(thisRoute).concat(query);
       return localFetch(url, fetchOpts).then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson);
+    }
+  }, {
+    key: "multipartBodyForResuest",
+    value: function multipartBodyForResuest(parameters) {
+      var body = new LocalFormData();
+      var bodyContainsObjects = false;
+      // Before params get "flattened" extract the fields and encode them as a
+      // single JSON string, which the server can handle
+      var fields = parameters.fields;
+      if (fields) {
+        body.append("fields", _typeof(fields) === "object" ? JSON.stringify(fields) : fields);
+      }
+      // multipart requests reference all nested parameter names as strings
+      // so flatten arrays into "arr[0]" and objects into "obj[prop]"
+      var params = iNaturalistAPI.flattenMultipartParams(parameters);
+      Object.keys(params).forEach(function (k) {
+        if (k.match(/^fields\[/)) {
+          return;
+        }
+        // FormData params can include options like file upload sizes
+        if (params[k] && params[k].type === "custom" && params[k].value) {
+          body.append(k, params[k].value, params[k].options);
+          bodyContainsObjects = true;
+        } else {
+          if (params[k] !== null && _typeof(params[k]) === "object") {
+            bodyContainsObjects = true;
+          }
+          body.append(k, typeof params[k] === "boolean" ? params[k].toString() : params[k]);
+        }
+      });
+      // there are no parameters with type object, so there are no files in this
+      // request. Return null as this request does not need to be multipart
+      if (!bodyContainsObjects) {
+        return null;
+      }
+      return body;
     }
 
     // a variant of post using the http PUT method
