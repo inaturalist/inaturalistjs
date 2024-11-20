@@ -18,7 +18,8 @@
     "test": "NODE_ENV=test mocha --recursive --exit",
     "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test",
     "webpack": "webpack",
-    "webpack-watch": "webpack watch"
+    "webpack-watch": "webpack watch",
+    "eslint": "./node_modules/.bin/eslint ."
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
