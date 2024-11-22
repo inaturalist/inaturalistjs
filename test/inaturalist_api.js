@@ -109,6 +109,14 @@ describe( "iNaturalistAPI", ( ) => {
       expect( body.constructor.name ).to.eq( "FormData" );
     } );
 
+    it( "returns FormData if any field names contain brackets", ( ) => {
+      const requestParameters = {
+        "field_with[brackets]": true
+      };
+      const body = iNaturalistAPI.multipartBodyForResuest( requestParameters );
+      expect( body.constructor.name ).to.eq( "FormData" );
+    } );
+
     it( "returns fields as a JSON string", ( ) => {
       const fields = {
         field1: true,
