@@ -2448,6 +2448,9 @@ var Taxon = /*#__PURE__*/function (_Model) {
     if (_this.default_photo && _this.default_photo !== undefined) {
       _this.defaultPhoto = new Photo(_this.default_photo);
     }
+    if (_this.representative_photo && _this.representative_photo !== undefined) {
+      _this.representativePhoto = new Photo(_this.representative_photo);
+    }
     if (_this.taxon_photos && _this.taxon_photos !== undefined) {
       _this.taxonPhotos = _this.taxon_photos.map(function (tp) {
         return {
