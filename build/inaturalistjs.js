@@ -4966,6 +4966,15 @@ var users = /*#__PURE__*/function () {
         useAuth: true
       }));
     }
+  }, {
+    key: "emailAvailable",
+    value: function emailAvailable(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = _objectSpread({}, opts);
+      options.useAuth = true;
+      options.useWriteApi = true;
+      return iNaturalistAPI.get("users/email_available", params, options);
+    }
   }]);
 }();
 module.exports = users;

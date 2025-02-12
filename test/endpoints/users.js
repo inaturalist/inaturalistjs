@@ -208,9 +208,16 @@ describe( "Users", ( ) => {
       nock( "http://localhost:3000" )
         .post( "/users/resend_confirmation" )
         .reply( 200 );
-      users.resendConfirmation( { } ).then( ( ) => {
-        done( );
-      } );
+      users.resendConfirmation( { } ).then( ( ) => done( ) );
+    } );
+  } );
+
+  describe( "emailAvailable", ( ) => {
+    it( "succeeds", done => {
+      nock( "http://localhost:3000" )
+        .get( "/users/email_available" )
+        .reply( 200 );
+      users.emailAvailable( { } ).then( ( ) => done( ) );
     } );
   } );
 } );
