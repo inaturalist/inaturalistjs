@@ -1996,9 +1996,11 @@ var announcements = /*#__PURE__*/function () {
   return _createClass(announcements, null, [{
     key: "search",
     value: function search(params, options) {
-      return iNaturalistAPI.get("announcements", params, _objectSpread(_objectSpread({}, options), {}, {
+      var opts = _objectSpread(_objectSpread({}, options), {}, {
+        useWriteApi: true,
         useAuth: true
-      })).then(Announcement.typifyInstanceResponse);
+      });
+      return iNaturalistAPI.get("announcements/active", params, opts).then(Announcement.typifyResultsResponse);
     }
   }, {
     key: "dismiss",
