@@ -5,8 +5,8 @@ const announcements = require( "../../lib/endpoints/announcements" );
 describe( "Announcements", ( ) => {
   describe( "search", ( ) => {
     it( "fetches announcements", done => {
-      nock( "http://localhost:4000" )
-        .get( "/v1/announcements" )
+      nock( "http://localhost:3000" )
+        .get( "/announcements/active" )
         .reply( 200, [{ id: 1, body: "test announcement" }] );
       announcements.search( ).then( results => {
         expect( results[0].id ).to.eq( 1 );
