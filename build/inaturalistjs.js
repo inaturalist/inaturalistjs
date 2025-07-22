@@ -175,6 +175,9 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       if (iNaturalistAPI.defaultUserAgent && !headers["user-agent"]) {
         headers["user-agent"] = iNaturalistAPI.defaultUserAgent;
       }
+      if (options.remote_ip) {
+        headers["x-forwarded-for"] = options.remote_ip;
+      }
       var host = options.useWriteApi ? iNaturalistAPI.writeApiURL : iNaturalistAPI.apiURL;
       var baseURL = "".concat(host, "/").concat(thisRoute);
       var remainingParams = interpolated.remainingParams;
@@ -1085,9 +1088,12 @@ module.exports = exports;
 /* 3 */
 /***/ (function(module) {
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+"use strict";
+
+
 /* eslint-env browser */
-module.exports = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' ? self.FormData : window.FormData;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+module.exports = (typeof self === "undefined" ? "undefined" : _typeof(self)) === 'object' ? self.FormData : window.FormData;
 
 /***/ }),
 /* 4 */

@@ -193,6 +193,14 @@ describe( "iNaturalistAPI", ( ) => {
         done( );
       } ).catch( done );
     } );
+    it( "can set x-forwarded-for for GET requests", done => {
+      nock( "http://localhost:4000", { reqheaders: { "x-forwarded-for": "1.2.3.4" } } )
+        .get( "/v1/observations" )
+        .reply( 200, { id: 1 } );
+      iNaturalistAPI.get( "observations", {}, { remote_ip: "1.2.3.4" } ).then( ( ) => {
+        done( );
+      } ).catch( done );
+    } );
     it( "should pass through arbitrary headers for POST requests", done => {
       nock( "http://localhost:3000", { reqheaders: { "Accept-Language": "es" } } )
         .post( "/observations", { taxon_id: 4 } )
@@ -200,6 +208,14 @@ describe( "iNaturalistAPI", ( ) => {
       iNaturalistAPI.post( "observations", { taxon_id: 4 }, { headers: { "Accept-Language": "es" } } ).then( ( ) => {
         done( );
       } ).catch( done );
+    } );
+    it( "can set x-forwarded-for for post", done => {
+      nock( "http://localhost:3000", { reqheaders: { "x-forwarded-for": "1.2.3.4" } } )
+        .post( "/observations", { taxon_id: 4 } )
+        .reply( 200, { id: 1 } );
+      iNaturalistAPI.post( "observations", { taxon_id: 4 }, { remote_ip: "1.2.3.4" } ).then( ( ) => {
+        done( );
+      } );
     } );
     // Not entirely sure how to test this, maybe with a Sinon mock? ~~~kueda 20230905
     it( "should not allow arbitrary headers to override Content-Type" );
