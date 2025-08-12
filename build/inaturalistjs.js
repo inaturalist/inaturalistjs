@@ -3179,6 +3179,24 @@ var identifications = /*#__PURE__*/function () {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       return iNaturalistAPI.get("identifications/categories", params, opts);
     }
+  }, {
+    key: "vote",
+    value: function vote(params, options) {
+      var endpoint = "votes/vote/identification/:id";
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
+        endpoint = "identifications/:id/vote";
+      }
+      return iNaturalistAPI.post(endpoint, params, options).then(Identification.typifyInstanceResponse);
+    }
+  }, {
+    key: "unvote",
+    value: function unvote(params, options) {
+      var endpoint = "votes/unvote/identification/:id";
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
+        endpoint = "identifications/:id/vote";
+      }
+      return iNaturalistAPI["delete"](endpoint, params, options);
+    }
   }]);
 }();
 module.exports = identifications;
