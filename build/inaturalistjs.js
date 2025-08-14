@@ -2002,11 +2002,15 @@ var announcements = /*#__PURE__*/function () {
   return _createClass(announcements, null, [{
     key: "search",
     value: function search(params, options) {
+      var endpoint = "announcements/active";
+      if (iNaturalistAPI.writeApiURL && iNaturalistAPI.writeApiURL.match(/\/v\d/)) {
+        endpoint = "announcements";
+      }
       var opts = _objectSpread(_objectSpread({}, options), {}, {
         useWriteApi: true,
         useAuth: true
       });
-      return iNaturalistAPI.get("announcements/active", params, opts).then(Announcement.typifyResultsResponse);
+      return iNaturalistAPI.get(endpoint, params, opts).then(Announcement.typifyResultsResponse);
     }
   }, {
     key: "dismiss",
@@ -2044,9 +2048,9 @@ var Announcement = /*#__PURE__*/function (_Model) {
   }
   _inherits(Announcement, _Model);
   return _createClass(Announcement, null, [{
-    key: "typifyInstanceResponse",
-    value: function typifyInstanceResponse(response) {
-      return _get(_getPrototypeOf(Announcement), "typifyInstanceResponse", this).call(this, response, Announcement);
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(Announcement), "typifyResultsResponse", this).call(this, response, Announcement);
     }
   }]);
 }(Model);
@@ -4297,11 +4301,7 @@ var ProviderAuthorizations = /*#__PURE__*/function () {
   }, {
     key: "delete",
     value: function _delete(params, options) {
-      var endpoint = "provider_authorizations/:id";
-      if (iNaturalistAPI.writeApiURL && iNaturalistAPI.writeApiURL.match(/\/v\d/)) {
-        endpoint = "provider_authorizations/:id";
-      }
-      return iNaturalistAPI["delete"](endpoint, params, options);
+      return iNaturalistAPI["delete"]("provider_authorizations/:id", params, options);
     }
   }]);
 }();
