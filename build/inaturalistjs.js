@@ -2582,6 +2582,15 @@ var Photo = /*#__PURE__*/function (_Model) {
       return flagged;
     }
   }, {
+    key: "flaggedAsArtificial",
+    value: function flaggedAsArtificial() {
+      var flagged = false;
+      this.flags.forEach(function (flag) {
+        flagged = flagged || !flag.resolved && flag.flag === "artificially generated content";
+      });
+      return flagged;
+    }
+  }, {
     key: "dimensions",
     value: function dimensions(size) {
       var longEdges = {
