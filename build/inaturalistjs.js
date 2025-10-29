@@ -3182,7 +3182,7 @@ var identifications = /*#__PURE__*/function () {
   }, {
     key: "vote",
     value: function vote(params, options) {
-      var endpoint = "votes/vote/identification/:id";
+      var endpoint = "votes/vote/exemplar_identification/:id";
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
         endpoint = "identifications/:id/vote";
       }
@@ -3191,11 +3191,21 @@ var identifications = /*#__PURE__*/function () {
   }, {
     key: "unvote",
     value: function unvote(params, options) {
-      var endpoint = "votes/unvote/identification/:id";
+      var endpoint = "votes/unvote/exemplar_identification/:id";
       if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
         endpoint = "identifications/:id/vote";
       }
       return iNaturalistAPI["delete"](endpoint, params, options);
+    }
+  }, {
+    key: "nominate",
+    value: function nominate(params, options) {
+      return iNaturalistAPI.post("identifications/:id/nominate", params, options);
+    }
+  }, {
+    key: "unnominate",
+    value: function unnominate(params, options) {
+      return iNaturalistAPI["delete"]("identifications/:id/unnominate", params, options);
     }
   }]);
 }();
@@ -4838,8 +4848,8 @@ var TaxonIdentification = /*#__PURE__*/function (_Model) {
     var _this;
     _classCallCheck(this, TaxonIdentification);
     _this = _callSuper(this, TaxonIdentification, [attrs]);
-    if (_this.observation) {
-      _this.observation = new Observation(_this.observation);
+    if (_this.identification.observation) {
+      _this.identification.observation = new Observation(_this.identification.observation);
     }
     return _this;
   }
