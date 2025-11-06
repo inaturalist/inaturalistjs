@@ -132,4 +132,31 @@ describe( "Photo", ( ) => {
       expect( p.flaggedAsCopyrighted( ) ).to.be.false;
     } );
   } );
+
+  describe( "flaggedAsArtificial", ( ) => {
+    it( "returns false if there are no flags", ( ) => {
+      const p = new Photo( { flags: [] } );
+      expect( p.flaggedAsArtificial( ) ).to.be.false;
+    } );
+
+    it( "returns true if there is an unresolved artificially generated content flag", ( ) => {
+      const p = new Photo( {
+        flags: [{
+          resolved: false,
+          flag: "artificially generated content"
+        }]
+      } );
+      expect( p.flaggedAsArtificial( ) ).to.be.true;
+    } );
+
+    it( "returns false if all artificially generated content flags are resolved", ( ) => {
+      const p = new Photo( {
+        flags: [{
+          resolved: true,
+          flag: "artificially generated content"
+        }]
+      } );
+      expect( p.flaggedAsArtificial( ) ).to.be.false;
+    } );
+  } );
 } );

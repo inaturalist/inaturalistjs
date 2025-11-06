@@ -1,6 +1,7 @@
 const { expect } = require( "chai" );
 const nock = require( "nock" );
 const announcements = require( "../../lib/endpoints/announcements" );
+const iNaturalistAPI = require( "../../lib/inaturalist_api" );
 
 describe( "Announcements", ( ) => {
   describe( "search", ( ) => {
@@ -13,6 +14,20 @@ describe( "Announcements", ( ) => {
         expect( results[0].body ).to.eq( "test announcement" );
         done( );
       } );
+    } );
+
+    it( "fetches from /v1/announcements if writing to node", done => {
+      const existing = iNaturalistAPI.writeApiURL;
+      iNaturalistAPI.writeApiURL = "http://localhost:4000/v1";
+      nock( "http://localhost:4000" )
+        .get( "/v1/announcements" )
+        .reply( 200, [{ id: 1, body: "test announcement" }] );
+      announcements.search( ).then( results => {
+        expect( results[0].id ).to.eq( 1 );
+        expect( results[0].body ).to.eq( "test announcement" );
+        done( );
+      } );
+      iNaturalistAPI.writeApiURL = existing;
     } );
   } );
 
