@@ -35,9 +35,10 @@ module.exports = {
   sites: __webpack_require__(58),
   sounds: __webpack_require__(60),
   taxa: __webpack_require__(61),
-  taxon_name_priorities: __webpack_require__(62),
-  translations: __webpack_require__(64),
-  users: __webpack_require__(65),
+  taxon_id_summaries: __webpack_require__(62),
+  taxon_name_priorities: __webpack_require__(64),
+  translations: __webpack_require__(66),
+  users: __webpack_require__(67),
   Annotation: __webpack_require__(12),
   Comment: __webpack_require__(19),
   ControlledTerm: __webpack_require__(29),
@@ -56,7 +57,7 @@ module.exports = {
   Sound: __webpack_require__(26),
   Taxon: __webpack_require__(22),
   User: __webpack_require__(24),
-  FileUpload: __webpack_require__(66)
+  FileUpload: __webpack_require__(68)
 };
 
 /***/ }),
@@ -493,7 +494,7 @@ var iNaturalistAPI = /*#__PURE__*/function () {
       var interpolatedRoute = route;
       var remainingParams = _objectSpread({}, params);
       var interpolatedParams = {};
-      var matches = route.match(/(:[a-z]+)(?=\/|$)/g);
+      var matches = route.match(/(:[a-z0-9_]+)(?=\/|$)/gi);
       if (matches) {
         matches.forEach(function (sym) {
           if (err) {
@@ -4781,7 +4782,107 @@ function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), 
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var iNaturalistAPI = __webpack_require__(1);
-var TaxonNamePriority = __webpack_require__(63);
+var TaxonIdSummary = __webpack_require__(63);
+var taxonIdSummaries = /*#__PURE__*/function () {
+  function taxonIdSummaries() {
+    _classCallCheck(this, taxonIdSummaries);
+  }
+  return _createClass(taxonIdSummaries, null, [{
+    key: "fetch",
+    value: function fetch(ids, params) {
+      return iNaturalistAPI.fetch("taxon_id_summaries", ids, params).then(TaxonIdSummary.typifyResultsResponse);
+    }
+  }, {
+    key: "search",
+    value: function search(params, options) {
+      return iNaturalistAPI.get("taxon_id_summaries", params, options).then(TaxonIdSummary.typifyResultsResponse);
+    }
+  }, {
+    key: "summaryQualityMetrics",
+    value: function summaryQualityMetrics(params, options) {
+      return iNaturalistAPI.get("taxon_id_summaries/:uuid/id_summaries/:id/quality_metrics", params, options);
+    }
+  }, {
+    key: "setSummaryQualityMetric",
+    value: function setSummaryQualityMetric(params, options) {
+      return iNaturalistAPI.post("taxon_id_summaries/:uuid/id_summaries/:id/quality/:metric", params, options);
+    }
+  }, {
+    key: "deleteSummaryQualityMetric",
+    value: function deleteSummaryQualityMetric(params, options) {
+      return iNaturalistAPI["delete"]("taxon_id_summaries/:uuid/id_summaries/:id/quality/:metric", params, options);
+    }
+  }, {
+    key: "referenceQualityMetrics",
+    value: function referenceQualityMetrics(params, options) {
+      return iNaturalistAPI.get("taxon_id_summaries/:uuid/id_summaries/:id/references/:reference_id/quality_metrics", params, options);
+    }
+  }, {
+    key: "setReferenceQualityMetric",
+    value: function setReferenceQualityMetric(params, options) {
+      return iNaturalistAPI.post("taxon_id_summaries/:uuid/id_summaries/:id/references/:reference_id/quality/:metric", params, options);
+    }
+  }, {
+    key: "deleteReferenceQualityMetric",
+    value: function deleteReferenceQualityMetric(params, options) {
+      return iNaturalistAPI["delete"]("taxon_id_summaries/:uuid/id_summaries/:id/references/:reference_id/quality/:metric", params, options);
+    }
+  }]);
+}();
+module.exports = taxonIdSummaries;
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _get() { return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) { var p = _superPropBase(e, t); if (p) { var n = Object.getOwnPropertyDescriptor(p, t); return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value; } }, _get.apply(null, arguments); }
+function _superPropBase(t, o) { for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t));); return t; }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+var Model = __webpack_require__(10);
+var TaxonIdSummary = /*#__PURE__*/function (_Model) {
+  function TaxonIdSummary() {
+    _classCallCheck(this, TaxonIdSummary);
+    return _callSuper(this, TaxonIdSummary, arguments);
+  }
+  _inherits(TaxonIdSummary, _Model);
+  return _createClass(TaxonIdSummary, null, [{
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(TaxonIdSummary), "typifyResultsResponse", this).call(this, response, TaxonIdSummary);
+    }
+  }, {
+    key: "typifyInstanceResponse",
+    value: function typifyInstanceResponse(response) {
+      return _get(_getPrototypeOf(TaxonIdSummary), "typifyInstanceResponse", this).call(this, response, TaxonIdSummary);
+    }
+  }]);
+}(Model);
+module.exports = TaxonIdSummary;
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var iNaturalistAPI = __webpack_require__(1);
+var TaxonNamePriority = __webpack_require__(65);
 var taxonNamePriorities = /*#__PURE__*/function () {
   function taxonNamePriorities() {
     _classCallCheck(this, taxonNamePriorities);
@@ -4806,7 +4907,7 @@ var taxonNamePriorities = /*#__PURE__*/function () {
 module.exports = taxonNamePriorities;
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -4841,7 +4942,7 @@ var TaxonNamePriority = /*#__PURE__*/function (_Model) {
 module.exports = TaxonNamePriority;
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -4867,7 +4968,7 @@ var translations = /*#__PURE__*/function () {
 module.exports = translations;
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -4997,7 +5098,7 @@ var users = /*#__PURE__*/function () {
 module.exports = users;
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module) {
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
