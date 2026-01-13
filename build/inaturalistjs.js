@@ -4851,12 +4851,16 @@ function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? O
 function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
 var Model = __webpack_require__(10);
+var Identification = __webpack_require__(27);
 var Observation = __webpack_require__(21);
 var TaxonIdentification = /*#__PURE__*/function (_Model) {
   function TaxonIdentification(attrs) {
     var _this;
     _classCallCheck(this, TaxonIdentification);
     _this = _callSuper(this, TaxonIdentification, [attrs]);
+    if (_this.identification) {
+      _this.identification = new Identification(_this.identification);
+    }
     if (_this.identification.observation) {
       _this.identification.observation = new Observation(_this.identification.observation);
     }
