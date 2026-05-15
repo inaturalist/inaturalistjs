@@ -2,6 +2,9 @@ name: inaturalistjs CI
 
 on: [push, pull_request]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   pre_build:
     runs-on: ubuntu-22.04
@@ -14,27 +17,15 @@ jobs:
     needs: pre_build
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
+        node-version: 24.x
 
     - run: npm install
 
     - run: npm run coverage
 
     - run: npm run eslint
-
-  notify:
-    name: Notify Slack
-    needs: build
-    if: ${{ success() || failure() }}
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: iRoachie/slack-github-actions@v2.3.2
-        if: env.SLACK_WEBHOOK_URL != null
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BUILDS_WEBHOOK_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
