@@ -102,6 +102,18 @@ var iNaturalistAPI = /*#__PURE__*/function () {
     _classCallCheck(this, iNaturalistAPI);
   }
   return _createClass(iNaturalistAPI, null, [{
+    key: "requestAndReturn",
+    value: function requestAndReturn(fetch) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var responseHeaders;
+      return fetch.then(function (response) {
+        responseHeaders = response.headers;
+        return response;
+      }).then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson).then(function (text) {
+        return iNaturalistAPI.thenWrap(text, responseHeaders, options);
+      });
+    }
+  }, {
     key: "fetch",
     value: function fetch(route, ids, p) {
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -146,7 +158,7 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           signal: options.signal
         });
       }
-      return fetch.then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson).then(iNaturalistAPI.thenWrap);
+      return iNaturalistAPI.requestAndReturn(fetch, options);
     }
 
     // Note, this generally assumes that all GET requests go to the Node API. If
@@ -210,7 +222,7 @@ var iNaturalistAPI = /*#__PURE__*/function () {
           signal: options.signal
         });
       }
-      return fetch.then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson).then(iNaturalistAPI.thenWrap);
+      return iNaturalistAPI.requestAndReturn(fetch, options);
     }
   }, {
     key: "post",
@@ -274,7 +286,8 @@ var iNaturalistAPI = /*#__PURE__*/function () {
         query = "?".concat(querystring.stringify(interpolated.remainingParams));
       }
       var url = "".concat(host, "/").concat(thisRoute).concat(query);
-      return localFetch(url, fetchOpts).then(iNaturalistAPI.thenText).then(iNaturalistAPI.thenJson);
+      var fetch = localFetch(url, fetchOpts);
+      return iNaturalistAPI.requestAndReturn(fetch, options);
     }
   }, {
     key: "multipartBodyForResuest",
@@ -423,10 +436,21 @@ var iNaturalistAPI = /*#__PURE__*/function () {
   }, {
     key: "thenWrap",
     value: function thenWrap(response) {
+      var backendResponseHeaders = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var wrappedResponse;
       if (Array.isArray(response)) {
-        return response;
+        wrappedResponse = response;
+      } else {
+        wrappedResponse = new INaturalistAPIResponse(response);
       }
-      return new INaturalistAPIResponse(response);
+      if (options.responseHeaders) {
+        wrappedResponse.headers = {};
+        backendResponseHeaders.forEach(function (v, k) {
+          wrappedResponse.headers[k] = v;
+        });
+      }
+      return wrappedResponse;
     }
 
     // flatten nested objects like arrays into "arr[0]" and objects into "obj[prop]"
@@ -1881,11 +1905,10 @@ var Model = /*#__PURE__*/function () {
   }, {
     key: "typifyArrayResponse",
     value: function typifyArrayResponse(response, Type) {
-      var arr = [];
-      Object.keys(response).forEach(function (k) {
-        arr.push(new Type(response[k]));
+      response.forEach(function (item, index) {
+        response[index] = new Type(item);
       });
-      return arr;
+      return response;
     }
   }, {
     key: "typifyResultsResponse",
@@ -4077,9 +4100,15 @@ var posts = /*#__PURE__*/function () {
     key: "for_user",
     value: function for_user(params, options) {
       // eslint-disable-line camelcase
+      // v1 just returns an array, but v2 returns the typical response object
+      // with response metadata and an atttribute `results` that is an array
+      var typifyMethod = Post.typifyArrayResponse;
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
+        typifyMethod = Post.typifyResultsResponse;
+      }
       return iNaturalistAPI.get("posts/for_user", params, _objectSpread(_objectSpread({}, options), {}, {
         useAuth: true
-      })).then(Post.typifyArrayResponse);
+      })).then(typifyMethod);
     }
   }, {
     key: "create",
@@ -4135,6 +4164,11 @@ var Post = /*#__PURE__*/function (_Model) {
     key: "typifyInstanceResponse",
     value: function typifyInstanceResponse(response) {
       return _get(_getPrototypeOf(Post), "typifyInstanceResponse", this).call(this, response, Post);
+    }
+  }, {
+    key: "typifyResultsResponse",
+    value: function typifyResultsResponse(response) {
+      return _get(_getPrototypeOf(Post), "typifyResultsResponse", this).call(this, response, Post);
     }
   }]);
 }(Model);
