@@ -1,6 +1,7 @@
 const { expect } = require( "chai" );
 const nock = require( "nock" );
 const postsEndpoint = require( "../../lib/endpoints/posts" );
+const testHelper = require( "../../lib/test_helper" );
 
 describe( "Posts", ( ) => {
   describe( "for_user", ( ) => {
@@ -11,6 +12,7 @@ describe( "Posts", ( ) => {
       postsEndpoint.for_user( ).then( posts => {
         expect( posts[0].id ).to.eq( 1 );
         expect( posts[0].body ).to.eq( "testpost" );
+        expect( posts[0].constructor.name ).to.eq( "Post" );
         done( );
       } );
     } );
@@ -19,6 +21,29 @@ describe( "Posts", ( ) => {
         .get( "/v1/posts/for_user" )
         .reply( 200, [{ id: 1, body: "testpost" }] );
       postsEndpoint.for_user( {}, { api_token: "key" } ).then( ( ) => done( ) );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "returns an object", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/posts/for_user" )
+          .reply( 200, {
+            total_results: 1,
+            page: 1,
+            per_page: 1,
+            results: [{
+              id: 1
+            }]
+          } );
+        postsEndpoint.for_user( ).then( response => {
+          expect( response.total_results ).to.eq( 1 );
+          expect( response.results[0].id ).to.eq( 1 );
+          expect( response.results[0].constructor.name ).to.eq( "Post" );
+          done( );
+        } );
+      } );
     } );
   } );
 

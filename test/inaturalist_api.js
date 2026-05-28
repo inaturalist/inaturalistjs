@@ -220,6 +220,83 @@ describe( "iNaturalistAPI", ( ) => {
     // Not entirely sure how to test this, maybe with a Sinon mock? ~~~kueda 20230905
     it( "should not allow arbitrary headers to override Content-Type" );
 
+    describe( "responseHeaders", ( ) => {
+      describe( "fetch", ( ) => {
+        beforeEach( ( ) => {
+          nock( "http://localhost:4000" )
+            .get( "/v1/observations/1234" )
+            .reply( 200, { id: 1 }, {
+              "X-Custom-Header": "customValue"
+            } );
+        } );
+
+        it( "does not include response headers by default", done => {
+          iNaturalistAPI.fetch( "observations", [1234] ).then( response => {
+            expect( response.headers ).to.be.undefined;
+            done( );
+          } );
+        } );
+
+        it( "can include response headers", done => {
+          iNaturalistAPI.fetch( "observations", [1234], { }, { responseHeaders: true } ).then( response => {
+            expect( response.headers ).to.not.be.undefined;
+            expect( response.headers["x-custom-header"] ).to.eq( "customValue" );
+            done( );
+          } );
+        } );
+      } );
+
+      describe( "get", ( ) => {
+        beforeEach( ( ) => {
+          nock( "http://localhost:4000" )
+            .get( "/v1/observations" )
+            .reply( 200, { id: 1 }, {
+              "X-Custom-Header": "customValue"
+            } );
+        } );
+
+        it( "does not include response headers by default", done => {
+          iNaturalistAPI.get( "observations" ).then( response => {
+            expect( response.headers ).to.be.undefined;
+            done( );
+          } );
+        } );
+
+        it( "can include response headers", done => {
+          iNaturalistAPI.get( "observations", { }, { responseHeaders: true } ).then( response => {
+            expect( response.headers ).to.not.be.undefined;
+            expect( response.headers["x-custom-header"] ).to.eq( "customValue" );
+            done( );
+          } );
+        } );
+      } );
+
+      describe( "post", ( ) => {
+        beforeEach( ( ) => {
+          nock( "http://localhost:3000" )
+            .post( "/observations" )
+            .reply( 200, { id: 1 }, {
+              "X-Custom-Header": "customValue"
+            } );
+        } );
+
+        it( "does not include response headers by default", done => {
+          iNaturalistAPI.post( "observations" ).then( response => {
+            expect( response.headers ).to.be.undefined;
+            done( );
+          } );
+        } );
+
+        it( "can include response headers", done => {
+          iNaturalistAPI.post( "observations", { }, { responseHeaders: true } ).then( response => {
+            expect( response.headers ).to.not.be.undefined;
+            expect( response.headers["x-custom-header"] ).to.eq( "customValue" );
+            done( );
+          } );
+        } );
+      } );
+    } );
+
     describe( "userAgent", ( ) => {
       it( "user agent is undefined by default", done => {
         nock( "http://localhost:4000" )

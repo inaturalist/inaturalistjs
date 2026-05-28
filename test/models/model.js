@@ -10,6 +10,32 @@ describe( "Model", ( ) => {
     } );
   } );
 
+  describe( "typifyArrayResponse", ( ) => {
+    it( "turns array items into types", ( ) => {
+      const r = [{ name: "modelname" }];
+      expect( r[0].constructor.name ).to.eq( "Object" );
+      Model.typifyArrayResponse( r, Model );
+      expect( r[0].constructor.name ).to.eq( "Model" );
+      expect( r[0].name ).to.eq( "modelname" );
+    } );
+
+    it( "preserves other array properties", ( ) => {
+      const r = [{ name: "modelname" }];
+      r.headers = { "X-Custom-Header": "customValue" };
+      expect( r[0].constructor.name ).to.eq( "Object" );
+      Model.typifyArrayResponse( r, Model );
+      expect( r[0].constructor.name ).to.eq( "Model" );
+      expect( r[0].name ).to.eq( "modelname" );
+      expect( r.headers["X-Custom-Header"] ).to.eq( "customValue" );
+    } );
+
+    it( "does nothing if there are no results", ( ) => {
+      const r = [];
+      Model.typifyResultsResponse( r, Model );
+      expect( r ).to.deep.eq( [] );
+    } );
+  } );
+
   describe( "typifyResultsResponse", ( ) => {
     it( "turns response results into types", ( ) => {
       const r = { results: [{ name: "modelname" }] };
