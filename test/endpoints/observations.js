@@ -316,28 +316,32 @@ describe( "Observation", ( ) => {
       } );
     } );
 
-    it( "returns an Unknown taxon for the null taxon of the unknown bucket", done => {
-      nock( "http://localhost:4000" )
-        .get( "/v1/observations/iconic_taxa_counts" )
-        .reply( 200, uri => {
-          const r = Object.assign( testHelper.mockResponse( uri ), {
-            results: [
-              { count: 2, taxon: { id: 1 } },
-              { count: 1, taxon: null }
-            ]
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "returns taxon counts including an Unknown taxon for the null taxon bucket", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/observations/iconic_taxa_counts" )
+          .reply( 200, uri => {
+            const r = Object.assign( testHelper.mockResponse( uri ), {
+              results: [
+                { count: 2, taxon: { id: 1 } },
+                { count: 1, taxon: null }
+              ]
+            } );
+            return r;
           } );
-          return r;
+        observations.iconicTaxaCounts( ).then( r => {
+          expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
+          expect( r.results[0].taxon.id ).to.eq( 1 );
+          const unknown = r.results[1].taxon;
+          expect( unknown.constructor.name ).to.eq( "Taxon" );
+          expect( unknown.id ).to.eq( null );
+          expect( unknown.name ).to.eq( "Unknown" );
+          expect( unknown.iconic_taxon_name ).to.eq( "Unknown" );
+          expect( unknown.iconicTaxonName( ) ).to.eq( "Unknown" );
+          done( );
         } );
-      observations.iconicTaxaCounts( ).then( r => {
-        expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
-        expect( r.results[0].taxon.id ).to.eq( 1 );
-        const unknown = r.results[1].taxon;
-        expect( unknown.constructor.name ).to.eq( "Taxon" );
-        expect( unknown.id ).to.eq( null );
-        expect( unknown.name ).to.eq( "Unknown" );
-        expect( unknown.iconic_taxon_name ).to.eq( "Unknown" );
-        expect( unknown.iconicTaxonName( ) ).to.eq( "Unknown" );
-        done( );
       } );
     } );
   } );
