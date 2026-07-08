@@ -319,7 +319,7 @@ describe( "Observation", ( ) => {
     describe( "v2", ( ) => {
       beforeEach( testHelper.v1ToV2 );
       afterEach( testHelper.v2ToV1 );
-      it( "returns taxon counts including an Unknown taxon for the null taxon bucket", done => {
+      it( "returns taxon counts including a null taxon for the unknown bucket", done => {
         nock( "http://localhost:4000" )
           .get( "/v2/observations/iconic_taxa_counts" )
           .reply( 200, uri => {
@@ -334,12 +334,8 @@ describe( "Observation", ( ) => {
         observations.iconicTaxaCounts( ).then( r => {
           expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
           expect( r.results[0].taxon.id ).to.eq( 1 );
-          const unknown = r.results[1].taxon;
-          expect( unknown.constructor.name ).to.eq( "Taxon" );
-          expect( unknown.id ).to.eq( null );
-          expect( unknown.name ).to.eq( "Unknown" );
-          expect( unknown.iconic_taxon_name ).to.eq( "Unknown" );
-          expect( unknown.iconicTaxonName( ) ).to.eq( "Unknown" );
+          expect( r.results[1].taxon ).to.eq( null );
+          expect( r.results[1].count ).to.eq( 1 );
           done( );
         } );
       } );

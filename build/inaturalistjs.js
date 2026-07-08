@@ -3774,20 +3774,15 @@ var observations = /*#__PURE__*/function () {
     key: "iconicTaxaCounts",
     value: function iconicTaxaCounts(params) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      // the v2 API returns a null taxon for the count of observations without
-      // an iconic taxon, equivalent to filtering with iconic_taxa=unknown
-      var unknownTaxon = {
-        id: null,
-        name: "Unknown",
-        iconic_taxon_name: "Unknown"
-      };
       return iNaturalistAPI.get("observations/iconic_taxa_counts", params, _objectSpread(_objectSpread({}, opts), {}, {
         useAuth: true
       })).then(function (response) {
         if (response.results) {
+          // the v2 API returns a null taxon for the count of observations without
+          // an iconic taxon, equivalent to filtering with iconic_taxa=unknown
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
-              taxon: new Taxon(r.taxon || unknownTaxon)
+              taxon: r.taxon ? new Taxon(r.taxon) : null
             });
           });
         }
