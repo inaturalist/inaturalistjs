@@ -3778,9 +3778,11 @@ var observations = /*#__PURE__*/function () {
         useAuth: true
       })).then(function (response) {
         if (response.results) {
+          // the v2 API returns a null taxon for the count of observations without
+          // an iconic taxon, equivalent to filtering with iconic_taxa=unknown
           response.results = response.results.map(function (r) {
             return _objectSpread(_objectSpread({}, r), {}, {
-              taxon: new Taxon(r.taxon)
+              taxon: r.taxon ? new Taxon(r.taxon) : null
             });
           });
         }
