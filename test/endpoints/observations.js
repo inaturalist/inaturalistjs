@@ -315,6 +315,31 @@ describe( "Observation", ( ) => {
         done( );
       } );
     } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "returns taxon counts including a null taxon for the unknown bucket", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/observations/iconic_taxa_counts" )
+          .reply( 200, uri => {
+            const r = Object.assign( testHelper.mockResponse( uri ), {
+              results: [
+                { count: 2, taxon: { id: 1 } },
+                { count: 1, taxon: null }
+              ]
+            } );
+            return r;
+          } );
+        observations.iconicTaxaCounts( ).then( r => {
+          expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
+          expect( r.results[0].taxon.id ).to.eq( 1 );
+          expect( r.results[1].taxon ).to.eq( null );
+          expect( r.results[1].count ).to.eq( 1 );
+          done( );
+        } );
+      } );
+    } );
   } );
 
   describe( "iconicTaxaSpeciesCounts", ( ) => {
