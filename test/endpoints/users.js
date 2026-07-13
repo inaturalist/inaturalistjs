@@ -220,4 +220,33 @@ describe( "Users", ( ) => {
       users.emailAvailable( { } ).then( ( ) => done( ) );
     } );
   } );
+
+  describe( "posts", ( ) => {
+    describe( "v1", ( ) => {
+      it( "throws an error", done => {
+        try {
+          users.posts( { id: 1 } ).then( ( ) => {
+            done( );
+          } );
+        } catch ( e ) {
+          expect( e.message ).to.eq( "API v1 does not support /users/:id/posts. Use /posts instead." );
+          done( );
+        }
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+
+      it( "succeeds", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/users/1/posts" )
+          .reply( 200 );
+        users.posts( { id: 1 } ).then( ( ) => {
+          done( );
+        } );
+      } );
+    } );
+  } );
 } );

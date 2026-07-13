@@ -5241,6 +5241,14 @@ var users = /*#__PURE__*/function () {
       options.useWriteApi = true;
       return iNaturalistAPI.get("users/email_available", params, options);
     }
+  }, {
+    key: "posts",
+    value: function posts(params, options) {
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v1/)) {
+        throw new Error("API v1 does not support /users/:id/posts. Use /posts instead.");
+      }
+      return iNaturalistAPI.get("users/:id/posts", params, options);
+    }
   }]);
 }();
 module.exports = users;
