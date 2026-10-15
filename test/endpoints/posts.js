@@ -70,6 +70,57 @@ describe( "Posts", ( ) => {
     } );
   } );
 
+  describe( "fetch", ( ) => {
+    it( "fetches a post", done => {
+      nock( "http://localhost:4000" )
+        .get( "/v1/posts/1" )
+        .reply( 200, { id: 1, body: "testpost" } );
+      postsEndpoint.fetch( { id: 1 } ).then( post => {
+        expect( post.id ).to.eq( 1 );
+        expect( post.body ).to.eq( "testpost" );
+        expect( post.constructor.name ).to.eq( "Post" );
+        done( );
+      } );
+    } );
+
+    it( "does not authenticate requests", done => {
+      nock( "http://localhost:4000", { badheaders: ["Authorization"] } )
+        .get( "/v1/posts/1" )
+        .reply( 200, { id: 1 } );
+      postsEndpoint.fetch( { id: 1 }, { api_token: "key" } ).then( ( ) => done( ) );
+    } );
+
+    it( "throws errors", done => {
+      postsEndpoint.fetch( { any: "thing" } ).catch( e => {
+        expect( e.message ).to.eq( "id required" );
+        done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "returns an object", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/posts/1" )
+          .reply( 200, {
+            total_results: 1,
+            page: 1,
+            per_page: 1,
+            results: [{
+              id: 1
+            }]
+          } );
+        postsEndpoint.fetch( { id: 1 } ).then( response => {
+          expect( response.total_results ).to.eq( 1 );
+          expect( response.results[0].id ).to.eq( 1 );
+          expect( response.results[0].constructor.name ).to.eq( "Post" );
+          done( );
+        } );
+      } );
+    } );
+  } );
+
   describe( "create", ( ) => {
     it( "posts to /posts", done => {
       nock( "http://localhost:3000" )
