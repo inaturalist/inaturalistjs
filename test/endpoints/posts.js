@@ -1,5 +1,6 @@
 const { expect } = require( "chai" );
 const nock = require( "nock" );
+const iNaturalistAPI = require( "../../lib/inaturalist_api" );
 const postsEndpoint = require( "../../lib/endpoints/posts" );
 const testHelper = require( "../../lib/test_helper" );
 
@@ -71,23 +72,27 @@ describe( "Posts", ( ) => {
   } );
 
   describe( "fetch", ( ) => {
-    it( "fetches a post", done => {
-      nock( "http://localhost:4000" )
-        .get( "/v1/posts/1" )
-        .reply( 200, { id: 1, body: "testpost" } );
-      postsEndpoint.fetch( { id: 1 } ).then( post => {
-        expect( post.id ).to.eq( 1 );
-        expect( post.body ).to.eq( "testpost" );
-        expect( post.constructor.name ).to.eq( "Post" );
-        done( );
-      } );
-    } );
+    describe( "from Rails", ( ) => {
+      beforeEach( ( ) => iNaturalistAPI.setConfig( { apiURL: "http://localhost:3000" } ) );
 
-    it( "does not authenticate requests", done => {
-      nock( "http://localhost:4000", { badheaders: ["Authorization"] } )
-        .get( "/v1/posts/1" )
-        .reply( 200, { id: 1 } );
-      postsEndpoint.fetch( { id: 1 }, { api_token: "key" } ).then( ( ) => done( ) );
+      it( "fetches a post", done => {
+        nock( "http://localhost:3000" )
+          .get( "/posts/1" )
+          .reply( 200, { id: 1, body: "testpost" } );
+        postsEndpoint.fetch( { id: 1 } ).then( post => {
+          expect( post.id ).to.eq( 1 );
+          expect( post.body ).to.eq( "testpost" );
+          expect( post.constructor.name ).to.eq( "Post" );
+          done( );
+        } );
+      } );
+
+      it( "does not authenticate requests", done => {
+        nock( "http://localhost:3000", { badheaders: ["Authorization"] } )
+          .get( "/posts/1" )
+          .reply( 200, { id: 1 } );
+        postsEndpoint.fetch( { id: 1 }, { api_token: "key" } ).then( ( ) => done( ) );
+      } );
     } );
 
     it( "throws errors", done => {
