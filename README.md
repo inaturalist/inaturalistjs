@@ -173,6 +173,10 @@ inatjs.observations.speciesCounts( params, opts ).then( rsp => { ... } );
 
 inatjs.places.fetch( params, opts ).then( rsp => { ... } );
 
+inatjs.posts.fetch( params, opts ).then( rsp => { ... } );
+inatjs.posts.search( params, opts ).then( rsp => { ... } );
+inatjs.posts.for_user( params, opts ).then( rsp => { ... } );
+
 inatjs.taxa.fetch( params, opts ).then( rsp => { ... } );
 inatjs.taxa.autocomplete( params, opts ).then( rsp => { ... } );
 ```
@@ -201,6 +205,10 @@ inatjs.observations.deleteQualityMetric( params, opts ).then( () => { ... } );
 inatjs.observationFieldValues.create( params, opts ).then( v => { ... } );
 inatjs.observationFieldValues.update( params, opts ).then( v => { ... } );
 inatjs.observationFieldValues.delete( params, opts ).then( () => { ... } );
+
+inatjs.posts.create( params, opts ).then( p => { ... } );
+inatjs.posts.update( params, opts ).then( p => { ... } );
+inatjs.posts.delete( params, opts ).then( () => { ... } );
 
 inatjs.projects.join( params, opts ).then( () => { ... } );
 inatjs.projects.leave( params, opts ).then( () => { ... } );
