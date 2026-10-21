@@ -249,4 +249,44 @@ describe( "Users", ( ) => {
       } );
     } );
   } );
+
+  describe( "taxaObserved", ( ) => {
+    describe( "v1", ( ) => {
+      it( "throws an error", done => {
+        try {
+          users.taxaObserved( { id: 1 } ).then( ( ) => {
+            done( );
+          } );
+        } catch ( e ) {
+          expect( e.message ).to.eq( "API v1 does not support /users/:id/taxa_observed. Use /observations/species_counts instead." );
+          done( );
+        }
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+
+      it( "returns taxon counts with first observed dates", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/users/1/taxa_observed" )
+          .reply( 200, uri => {
+            const r = Object.assign( testHelper.mockResponse( uri ), {
+              results: [
+                { count: 2, taxon: { id: 1 }, first_observed_on: "2026-10-09" }
+              ]
+            } );
+            return r;
+          } );
+        users.taxaObserved( { id: 1 } ).then( r => {
+          expect( r.results[0].taxon.constructor.name ).to.eq( "Taxon" );
+          expect( r.results[0].taxon.id ).to.eq( 1 );
+          expect( r.results[0].count ).to.eq( 2 );
+          expect( r.results[0].first_observed_on ).to.eq( "2026-10-09" );
+          done( );
+        } );
+      } );
+    } );
+  } );
 } );
