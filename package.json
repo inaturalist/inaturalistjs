@@ -19,7 +19,11 @@
     "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test",
     "webpack": "webpack",
     "webpack-watch": "webpack watch",
-    "eslint": "./node_modules/.bin/eslint ."
+    "eslint": "./node_modules/.bin/eslint .",
+    "bump": "node scripts/bump-version.js",
+    "bump:major": "node scripts/bump-version.js major",
+    "bump:minor": "node scripts/bump-version.js minor",
+    "bump:patch": "node scripts/bump-version.js patch"
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
