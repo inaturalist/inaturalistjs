@@ -5169,6 +5169,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var iNaturalistAPI = __webpack_require__(1);
 var Project = __webpack_require__(43);
+var Taxon = __webpack_require__(22);
 var User = __webpack_require__(24);
 var users = /*#__PURE__*/function () {
   function users() {
@@ -5287,6 +5288,26 @@ var users = /*#__PURE__*/function () {
         throw new Error("API v1 does not support /users/:id/posts. Use /posts instead.");
       }
       return iNaturalistAPI.get("users/:id/posts", params, options);
+    }
+  }, {
+    key: "taxaObserved",
+    value: function taxaObserved(params) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v1/)) {
+        throw new Error("API v1 does not support /users/:id/taxa_observed. Use /observations/species_counts instead.");
+      }
+      return iNaturalistAPI.get("users/:id/taxa_observed", params, _objectSpread(_objectSpread({}, opts), {}, {
+        useAuth: true
+      })).then(function (response) {
+        if (response.results) {
+          response.results = response.results.map(function (r) {
+            return _objectSpread(_objectSpread({}, r), {}, {
+              taxon: new Taxon(r.taxon)
+            });
+          });
+        }
+        return response;
+      });
     }
   }]);
 }();

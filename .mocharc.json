@@ -1,0 +1,4 @@
+{
+  "require": ["nock"],
+  "file": ["test/initialize.js"]
+}
