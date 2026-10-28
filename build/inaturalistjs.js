@@ -4143,6 +4143,15 @@ var posts = /*#__PURE__*/function () {
       })).then(typifyMethod);
     }
   }, {
+    key: "fetch",
+    value: function fetch(params, options) {
+      var typifyMethod = Post.typifyInstanceResponse;
+      if (iNaturalistAPI.apiURL && iNaturalistAPI.apiURL.match(/\/v2/)) {
+        typifyMethod = Post.typifyResultsResponse;
+      }
+      return iNaturalistAPI.get("posts/:id", params, options).then(typifyMethod);
+    }
+  }, {
     key: "create",
     value: function create(params, options) {
       return iNaturalistAPI.post("posts", params, options).then(Post.typifyInstanceResponse);

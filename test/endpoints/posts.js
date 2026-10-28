@@ -1,5 +1,6 @@
 const { expect } = require( "chai" );
 const nock = require( "nock" );
+const iNaturalistAPI = require( "../../lib/inaturalist_api" );
 const postsEndpoint = require( "../../lib/endpoints/posts" );
 const testHelper = require( "../../lib/test_helper" );
 
@@ -66,6 +67,61 @@ describe( "Posts", ( ) => {
         expect( posts[0].id ).to.eq( 1 );
         expect( posts[0].body ).to.eq( "testpost" );
         done( );
+      } );
+    } );
+  } );
+
+  describe( "fetch", ( ) => {
+    describe( "from Rails", ( ) => {
+      beforeEach( ( ) => iNaturalistAPI.setConfig( { apiURL: "http://localhost:3000" } ) );
+
+      it( "fetches a post", done => {
+        nock( "http://localhost:3000" )
+          .get( "/posts/1" )
+          .reply( 200, { id: 1, body: "testpost" } );
+        postsEndpoint.fetch( { id: 1 } ).then( post => {
+          expect( post.id ).to.eq( 1 );
+          expect( post.body ).to.eq( "testpost" );
+          expect( post.constructor.name ).to.eq( "Post" );
+          done( );
+        } );
+      } );
+
+      it( "does not authenticate requests", done => {
+        nock( "http://localhost:3000", { badheaders: ["Authorization"] } )
+          .get( "/posts/1" )
+          .reply( 200, { id: 1 } );
+        postsEndpoint.fetch( { id: 1 }, { api_token: "key" } ).then( ( ) => done( ) );
+      } );
+    } );
+
+    it( "throws errors", done => {
+      postsEndpoint.fetch( { any: "thing" } ).catch( e => {
+        expect( e.message ).to.eq( "id required" );
+        done( );
+      } );
+    } );
+
+    describe( "v2", ( ) => {
+      beforeEach( testHelper.v1ToV2 );
+      afterEach( testHelper.v2ToV1 );
+      it( "returns an object", done => {
+        nock( "http://localhost:4000" )
+          .get( "/v2/posts/1" )
+          .reply( 200, {
+            total_results: 1,
+            page: 1,
+            per_page: 1,
+            results: [{
+              id: 1
+            }]
+          } );
+        postsEndpoint.fetch( { id: 1 } ).then( response => {
+          expect( response.total_results ).to.eq( 1 );
+          expect( response.results[0].id ).to.eq( 1 );
+          expect( response.results[0].constructor.name ).to.eq( "Post" );
+          done( );
+        } );
       } );
     } );
   } );
